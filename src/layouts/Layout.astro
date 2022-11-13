@@ -1,5 +1,5 @@
 ---
-import { Image } from '@astrojs/image/components';
+import { Image } from "@astrojs/image/components";
 import Fathom from "../components/Fathom.astro";
 
 const { root, frontmatter } = Astro.props;
@@ -80,7 +80,7 @@ const { root, frontmatter } = Astro.props;
       footer {
         display: flex;
         align-items: center;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
         padding-top: 2em;
         gap: 1em;
         margin-top: 3em;
@@ -90,6 +90,12 @@ const { root, frontmatter } = Astro.props;
       footer img {
         width: 5.625rem;
         border-radius: 100%;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        footer {
+          border-color: rgba(255, 255, 255, 0.1);
+        }
       }
     </style>
   </head>
