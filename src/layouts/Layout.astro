@@ -1,4 +1,6 @@
 ---
+import Fathom from "../components/Fathom.astro";
+
 const { root, frontmatter } = Astro.props;
 ---
 
@@ -9,7 +11,11 @@ const { root, frontmatter } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <link href="https://www.responsive.ch/bundle.css" rel="stylesheet" />
     <title>
-      {`${frontmatter?.title ? `${frontmatter.title} – ` : ""}blog.responsive.ch`}
+      {
+        `${
+          frontmatter?.title ? `${frontmatter.title} – ` : ""
+        }blog.responsive.ch`
+      }
     </title>
     <style is:global>
       header {
@@ -109,5 +115,6 @@ const { root, frontmatter } = Astro.props;
         </p>
       </footer>
     </div>
+    <Fathom />
   </body>
 </html>
