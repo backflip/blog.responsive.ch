@@ -1,0 +1,113 @@
+---
+const { root, frontmatter } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link href="https://www.responsive.ch/bundle.css" rel="stylesheet" />
+    <title>
+      {`${frontmatter?.title ? `${frontmatter.title} – ` : ""}blog.responsive.ch`}
+    </title>
+    <style is:global>
+      header {
+        padding-top: 1em;
+      }
+
+      article {
+        margin-top: 4em;
+      }
+      article h2 {
+        margin-top: 0;
+      }
+      article time {
+        font-weight: bold;
+      }
+
+      figcaption,
+      .figcaption {
+        font-size: 0.8em;
+        text-align: center;
+        display: block;
+        margin-bottom: 2.5em;
+      }
+
+      main img {
+        display: block;
+        max-width: 25em;
+        margin: 0 auto 2em;
+      }
+
+      main figure img {
+        margin-bottom: 0;
+      }
+
+      code {
+        background: #2b2b2b;
+        border-radius: 0.3em;
+      }
+      .astro-code {
+        padding: 1em;
+        margin: 0.5em 0;
+        overflow: auto;
+        border-radius: 0.3em;
+      }
+      .astro-code code {
+        background: transparent;
+      }
+
+      .image-table table {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .image-table img {
+        width: 100%;
+        margin: 0;
+      }
+
+      footer {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 2em;
+        gap: 1em;
+        margin-top: 3em;
+        font-size: 0.8em;
+      }
+
+      footer img {
+        width: 5.625rem;
+        border-radius: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <a aria-current={root ? "page" : false} href="/"
+          >{`${root ? "" : `← `}blog.responsive.ch`}</a
+        >
+      </header>
+      <main>
+        {frontmatter?.title ? <h1>{frontmatter.title}</h1> : null}
+        <slot />
+      </main>
+      <footer>
+        <img
+          src="https://www.responsive.ch/media/portrait.jpg"
+          alt="Thomas Jaggi"
+        />
+        <p>
+          A blog about web technology and remotely related thingies.<br />
+          Written by <strong>Thomas Jaggi</strong> who does things with code at
+          <a href="https://responsive.ch">responsive.ch</a>.<br />
+          Please use <a href="https://twitter.com/backflip"
+            ><span role="img" aria-label="Twitter">🐦</span>
+          </a> for inputs and trolling.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
