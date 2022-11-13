@@ -1,4 +1,5 @@
 ---
+import { Image } from '@astrojs/image/components';
 import Fathom from "../components/Fathom.astro";
 
 const { root, frontmatter } = Astro.props;
@@ -43,6 +44,7 @@ const { root, frontmatter } = Astro.props;
       main img {
         display: block;
         max-width: 25em;
+        height: auto;
         margin: 0 auto 2em;
       }
 
@@ -101,9 +103,11 @@ const { root, frontmatter } = Astro.props;
         <slot />
       </main>
       <footer>
-        <img
+        <Image
           src="https://www.responsive.ch/media/portrait.jpg"
           alt="Thomas Jaggi"
+          width={90}
+          height={90}
         />
         <p>
           A blog about web technology and remotely related thingies.<br />

@@ -5,6 +5,7 @@ date: 2021-02-13
 abstract: Who doesn't like the smell of fresh apples in the morning?
 ---
 
+import { Image } from '@astrojs/image/components';
 import alfredCaniuse from "./media/alfred-caniuse.png";
 import alfredDash from "./media/alfred-dash.png";
 import alfredNpm from "./media/alfred-npm.png";
@@ -14,7 +15,7 @@ import snl from "./media/snl.png";
 
 First thing I do is some login screen gardening: Displaying my best self-portrait and [adding contact information](https://support.apple.com/en-bn/guide/mac-help/mh35890/mac). This way, I don't have to remember taking my MacBook with me when leaving the coffee shop.
 
-<img src={login} alt="Login screen with white avatar, name and phone number" />
+<Image src={login} alt="Login screen with white avatar, name and phone number" />
 
 The first app I install is [1Password](https://1password.com). It allows me to log into Github to download my `.zshrc`, `.gitconfig` and other preference files. Like the cool kids, I started out with a setup script. However, I always forgot to maintain it and ended up with outdated preferences. Now, I just push the system and application preferences I care about (e.g. `com.apple.dock.plist`) to Github right before setting up a new machine.
 
@@ -22,19 +23,19 @@ At some point I realize I have to install the [Xcode Command Line Tools](https:/
 
 The second app I can't live without is [Alfred](https://www.alfredapp.com). Highly recommended by Batman, Alfred not only helps me launching applications, but also remembering my [clipboard history](https://www.alfredapp.com/help/features/clipboard/), showing [my current IP](https://github.com/jeppestaerk/alfred-show-network-info) or finding [processes to kill](https://github.com/SamVerschueren/alfred-fkill). A typical workflow while writing frontend code:
 
-1. Opening the docs for a specific feature in [Dash](https://kapeli.com/dash): <img src={alfredDash} alt="Dash integration in Alfred" />
+1. Opening the docs for a specific feature in [Dash](https://kapeli.com/dash): <Image src={alfredDash} alt="Dash integration in Alfred" />
 
-2. Checking its [browser support](https://github.com/willfarrell/alfred-caniuse-workflow): <img src={alfredCaniuse} alt="Can i use integration in Alfred" />
+2. Checking its [browser support](https://github.com/willfarrell/alfred-caniuse-workflow): <Image src={alfredCaniuse} alt="Can i use integration in Alfred" />
 
-3. Finding a polyfill on [npm](https://github.com/sindresorhus/alfred-npms): <img src={alfredNpm} alt="npm package search in Alfred" />
+3. Finding a polyfill on [npm](https://github.com/sindresorhus/alfred-npms): <Image src={alfredNpm} alt="npm package search in Alfred" />
 
 The third one is [Rectangle](https://rectangleapp.com). It is used by [fellow CEOs](https://github.com/rxhanson/Rectangle/commits/master?before=57ac4a51bbb3cd0250f6bbf1d0e23573a2e6dd80+35&branch=master) and allows me to move around windows via keyboard (or mouse). When working on a widescreen display, I usually want to have two windows next to eachother. So whenever I open an app, I press <kbd>^⌥←</kbd> or <kbd>^⌥→</kbd> to use one or the other screen half. Another important use-case is catching up with SNL in an efficient way:
 
-<img src={snl} alt="Four windows displaying the SNL YouTube channel" />
+<Image src={snl} alt="Four windows displaying the SNL YouTube channel" />
 
 Moving on to the menu bar, I use [Dato](https://sindresorhus.com/dato) to display the current week number and have immediate access to the calendar. As you can see, I'm very good at calendaring:
 
-<img src={dato} alt="Screenshot of expanded calendar view in Dato" />
+<Image src={dato} alt="Screenshot of expanded calendar view in Dato" />
 
 The other menu bar app I approve of is [Lungo](https://sindresorhus.com/lungo). Why should your Mac be able to sleep when you can't?
 

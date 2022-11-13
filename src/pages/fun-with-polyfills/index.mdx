@@ -5,13 +5,14 @@ date: 2020-12-31
 abstract: How to remove the equivalent of multiple football fields from your JavaScript bundles by customizing <code class="language-text">@babel/preset-env</code>.
 ---
 
+import { Image } from '@astrojs/image/components';
 import ride from './media/ride.png';
 import analysis from './media/analysis.png';
 import success from './media/success.png';
 
 Using new JavaScript syntax or features while still supporting older browsers requires us to transpile and polyfill our code before deployment. The tool of choice is usually [Babel](https://babeljs.io/). Its [preset-env](https://babeljs.io/docs/en/babel-preset-env) plugin hides most of the complexity and allows us to simply specify a list of browsers to support, sit back and enjoy the ride. However, the ride might take an unexpected turn when analyzing the generated code.
 
-<img src={ride} alt="Dee and Dennis on a ride in episode 'The Gang Goes to the Jersey Shore' of 'It's Always Sunny in Philadelphia"/>
+<Image src={ride} alt="Dee and Dennis on a ride in episode 'The Gang Goes to the Jersey Shore' of 'It's Always Sunny in Philadelphia"/>
 
 Let's say we want to log all links on a page:
 
@@ -52,7 +53,7 @@ Babel slightly disagrees and rewrites it to the following code instead:
 
 Why oh why? Let's see how we got there.
 
-<img src={analysis} alt="Mac explaining things in 'Reynolds vs. Reynolds: The Cereal Defense' of 'It's Always Sunny in Philadelphia'"/>
+<Image src={analysis} alt="Mac explaining things in 'Reynolds vs. Reynolds: The Cereal Defense' of 'It's Always Sunny in Philadelphia'"/>
 
 ## Basic setup
 
@@ -207,7 +208,7 @@ Additionally adding `web.dom-collections.for-each` to the `exclude` option will 
 window.NodeList&&!NodeList.prototype.forEach&&(NodeList.prototype.forEach=Array.prototype.forEach),document.querySelectorAll("a").forEach(function(o){console.log(o.href)});
 ```
 
-<img src={success} alt="Glenn Howerton, Rob McElhenney and Charlie Day giving the thumbs up"/>
+<Image src={success} alt="Glenn Howerton, Rob McElhenney and Charlie Day giving the thumbs up"/>
 
 However, as we don't want to go back to manually copying polyfills, we could at least import something like [mdn-polyfills](https://github.com/msn0/mdn-polyfills) instead:
 
