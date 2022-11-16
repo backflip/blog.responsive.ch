@@ -1,0 +1,26 @@
+---
+layout: ../../layouts/Layout.astro
+title: Moving from Gatsby to Astro
+date: 2022-11-16
+abstract: This blog has been migrated from a previously fancy framework to a currently fancy framework.
+---
+
+After deciding to write more blog posts (heavily inspired by [Jim Nielsen](https://blog.jim-nielsen.com) and [Simon Willison](https://simonwillison.net)), the first step was crystal clear: Rebuilding the whole thing.
+
+As a responsible web developer, I'm obligated to spend at least 75% of my time evaluating new JavaScript frameworks. And there is no better way to do this than using them on ~~important customer~~ personal projects. When setting this blog up two years ago, [Gastby](https://www.gatsbyjs.com) was shiny. It worked out fine as I learned the valuable lesson that it is probably over-engineered for most things.
+
+Getting back to it after more than a year and on a computer with a different processor architecture, I was obviously unable to run `npm install` without twenty-five football fields of errors and warnings. As Gatsby had most probably been rewritten from the ground up, repeatedly, in the meantime, upgrading to the latest version would have taken some time anyway. So I picked a new shiny object: [Astro](https://astro.build).
+
+I had been closely following Astro's development and very much sympathized with its general philosophy:
+
+> [...] cover a wide range of styles in the noise field, from space music to psychedelically-tinged harsh noise
+
+Never mind, that is the [Japanese noise group](<https://en.wikipedia.org/wiki/Astro_(Japanese_band)>). This one here:
+
+> Zero JavaScript Runtime. Astro renders HTML on the server and strips away any remaining, unused JavaScript.
+
+Now you might think this is irrelevant for a blog with zero client-side JavaScript to begin. Great thinking! You have apparently never worked with [Next.js](https://nextjs.org). This shiny object uses artifical intelligence to generate JavaScript out of no JavaScript so it can send it to the visitors of your website because it hates all of them.
+
+(As it is stable, well-documented and well-known among developers I'm working with, I'm still using Next.js on many of my professional projects. But [Alex Russell](https://twitter.com/slightlylate)'s twitter feed started wearing me down and watching parts of [this self-adulation](https://nextjs.org/conf) didn't help either.)
+
+So Astro it is. Installing it was fun already, thanks to [Nate Moore](https://twitter.com/n_moore/status/1567164215307149312)'s amazing work. Nate had been a speaker at this year's [Front Conference](https://frontconference.com/speakers/nate-moore).
