@@ -1,9 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const posts = (await Astro.glob("./**/*.mdx")).sort(
-  (a, b) => Date.parse(b.frontmatter.date) - Date.parse(a.frontmatter.date)
-);
+const posts = (await Astro.glob("./**/*.mdx"))
+  .filter((post) => !post.frontmatter.draft)
+  .sort(
+    (a, b) => Date.parse(b.frontmatter.date) - Date.parse(a.frontmatter.date)
+  );
 const formatDate = (dateString) => {
   if (!dateString) {
     return null;
