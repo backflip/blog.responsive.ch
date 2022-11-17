@@ -6,7 +6,10 @@ abstract: This blog has been migrated from a previously fancy framework to a cur
 draft: true
 ---
 
-After deciding to write more blog posts (heavily inspired by [Jim Nielsen](https://blog.jim-nielsen.com) and [Simon Willison](https://simonwillison.net)), the first step was crystal clear: Rebuilding the whole thing.
+import { Image } from "@astrojs/image/components";
+import prompt from "./media/prompt.png";
+
+After deciding to write more blog posts (heavily inspired by [Jim Nielsen](https://blog.jim-nielsen.com) and [Simon Willison](https://simonwillison.net)), the first step was crystal clear: Replace the underlying framework so the actual writing part can be postponed.
 
 As a responsible web developer, I'm obligated to spend at least 75% of my time evaluating new JavaScript frameworks. And there is no better way to do this than using them on ~~important customer~~ personal projects. When setting this blog up two years ago, [Gastby](https://www.gatsbyjs.com) was shiny. It worked out fine as I learned the valuable lesson that it is probably over-engineered for most things.
 
@@ -27,5 +30,8 @@ Now you might think this is irrelevant for a blog with zero client-side JavaScri
 ### Takeaways
 
 1. Installing it is fun already, thanks to [Nate Moore](https://twitter.com/n_moore/status/1567164215307149312)'s amazing work. [^1]
+   <Image src={prompt} alt="create-astro saying hi to me" format="webp" />
+2. There are less dependencies than before.
+   <details><summary>Toggle code</summary></details>
 
 [^1]: Nate had been a speaker at this year's [Front Conference](https://frontconference.com/speakers/nate-moore).
