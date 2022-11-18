@@ -18,7 +18,7 @@ export const get = () =>
         link: post.url,
         title: post.frontmatter.title,
         pubDate: post.frontmatter.date,
-        description: post.frontmatter.abstract,
+        description: `<p>${post.frontmatter.abstract}</p>
+<p>(Full text will be available in feed as soon as Astro supports this for MDX).</p>`,
       })),
-    customData: `<language>en-us</language>`,
   });
