@@ -18,6 +18,7 @@ export const get = () =>
         link: post.url,
         title: post.frontmatter.title,
         pubDate: post.frontmatter.date,
+        description: post.frontmatter.abstract,
       })),
     customData: `<language>en-us</language>`,
   });
