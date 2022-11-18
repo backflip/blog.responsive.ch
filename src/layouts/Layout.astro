@@ -10,6 +10,12 @@ const { root, frontmatter } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      href="/rss.xml"
+      title="RSS Feed"
+    />
     <link href="https://www.responsive.ch/bundle.css" rel="stylesheet" />
     <title>
       {
