@@ -8,12 +8,16 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@astrojs/image": "^0.11.4",
     "@astrojs/mdx": "^0.11.6",
     "astro": "^1.6.7",
     "sharp": "^0.31.2"
+  },
+  "devDependencies": {
+    "patch-package": "^6.5.0"
   }
 }
