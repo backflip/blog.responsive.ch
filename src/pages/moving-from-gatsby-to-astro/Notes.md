@@ -41,6 +41,8 @@ npm ERR! info sharp Downloading https://github.com/lovell/sharp-libvips/releases
 npm ERR! ERR! sharp Prebuilt libvips 8.10.5 binaries are not yet available for darwin-arm64v8
 ```
 
+## Astro
+
 ```
 @responsive.ch/nlog@0.0.1 /Users/me/Sites/Misc/blog.responsive.ch
 └─┬ astro@1.6.7
@@ -906,6 +908,8 @@ npm ERR! ERR! sharp Prebuilt libvips 8.10.5 binaries are not yet available for d
   ├── yargs-parser@21.1.1
   └── zod@3.19.1
 ```
+
+## Gatsby
 
 ```
 @responsive.ch/blog@0.1.0 /Users/me/Sites/Misc/responsive.ch/packages/blog
@@ -5820,4 +5824,3 @@ npm ERR! ERR! sharp Prebuilt libvips 8.10.5 binaries are not yet available for d
   ├── loose-envify@1.4.0 deduped
   └── object-assign@4.1.1 deduped
 ```
-

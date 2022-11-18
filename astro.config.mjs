@@ -14,4 +14,9 @@ export default defineConfig({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
   ],
+  markdown: {
+    remarkRehype: {
+      footnoteLabel: "Hi Ben!",
+    },
+  },
 });
