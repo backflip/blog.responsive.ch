@@ -16,7 +16,7 @@ export default defineConfig({
   ],
   markdown: {
     remarkRehype: {
-      footnoteLabel: "Hi Ben!",
+      footnoteLabelTagName: "h3",
     },
   },
 });
