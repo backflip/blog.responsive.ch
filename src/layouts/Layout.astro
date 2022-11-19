@@ -1,6 +1,7 @@
 ---
 import { Image } from "@astrojs/image/components";
 import Fathom from "../components/Fathom.astro";
+import "../styles/main.css";
 
 const { root, frontmatter } = Astro.props;
 ---
@@ -16,7 +17,7 @@ const { root, frontmatter } = Astro.props;
       href="/rss.xml"
       title="RSS Feed"
     />
-    <link href="https://www.responsive.ch/bundle.css" rel="stylesheet" />
+    <link href="https://www.responsive.ch/assets/index.css" rel="stylesheet" />
     <title>
       {
         `${
@@ -24,100 +25,6 @@ const { root, frontmatter } = Astro.props;
         }blog.responsive.ch`
       }
     </title>
-    <style is:global>
-      header {
-        padding-top: 1em;
-      }
-
-      article {
-        margin-top: 4em;
-      }
-      article h2 {
-        margin-top: 0;
-      }
-      article time {
-        font-weight: bold;
-      }
-
-      figcaption,
-      .figcaption {
-        font-size: 0.8em;
-        text-align: center;
-        display: block;
-        margin-bottom: 2.5em;
-      }
-
-      main h3 {
-        margin-top: 2em;
-      }
-
-      main img {
-        display: block;
-        width: 100%;
-        max-width: 25em;
-        height: auto;
-        margin: 0 auto 2em;
-      }
-
-      main figure img,
-      main img.screenshot {
-        margin-bottom: 0;
-      }
-
-      code {
-        background: #2b2b2b;
-        color: #f8f8f2;
-        border-radius: 0.3em;
-        font-size: 0.9em;
-        padding-left: 0.2em;
-        padding-right: 0.2em;
-      }
-      .astro-code {
-        padding: 1em;
-        margin: 0.5em 0;
-        overflow: auto;
-        border-radius: 0.3em;
-        font-size: 0.9em;
-      }
-      .astro-code code {
-        background: transparent;
-      }
-
-      .image-table table {
-        width: 100%;
-        table-layout: fixed;
-      }
-      .image-table img {
-        width: 100%;
-        margin: 0;
-      }
-
-      .footnotes li p {
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-
-      footer {
-        display: flex;
-        align-items: center;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        padding-top: 2em;
-        gap: 1em;
-        margin-top: 3em;
-        font-size: 0.8em;
-      }
-
-      footer img {
-        width: 5.625rem;
-        border-radius: 100%;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        footer {
-          border-color: rgba(255, 255, 255, 0.1);
-        }
-      }
-    </style>
   </head>
   <body>
     <div class="wrapper">
