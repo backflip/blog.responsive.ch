@@ -54,6 +54,7 @@ code {
 }
 .astro-code code {
   background: transparent;
+  padding: 0;
 }
 
 .image-table table {
