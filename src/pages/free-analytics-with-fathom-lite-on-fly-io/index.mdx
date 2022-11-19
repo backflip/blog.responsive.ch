@@ -172,7 +172,7 @@ Now the "semi" part of (semi-)persistent is _really_ important. As written in th
 
 There are [snapshots](https://fly.io/docs/reference/volumes/#snapshots-and-restores) from the last five days. As I don't care too much about my analytics data, I can live with this level of resilience. But I might create the occasional offline backup.
 
-To back up something from our volume, we use `scp` or a GUI like [Transmit](https://panic.com/transmit/). If you are like me and did not read the [Wireguard manual](https://fly.io/docs/reference/private-networking/#private-network-vpn), you might want do this via a proxy:
+To back up something from our volume, we use `scp` or a GUI like [Transmit](https://panic.com/transmit/). If you are like me and did not read the [WireGuard manual](https://fly.io/docs/reference/private-networking/#private-network-vpn), you might want do this via a proxy:
 
 1. Issue SSH credentials and create the proxy:
 
@@ -202,13 +202,14 @@ Fly.io's [free plan](https://fly.io/docs/about/pricing/#free-allowances) has got
 
 ### Random notes
 
-- I ❤️ Fly.io. If an app requires more than a node server, I deploy it to Fly. They offer a great service and have a refreshing way of doing [marketing](https://fly.io/blog/) and [recruiting](https://fly.io/docs/hiring/hiring/).
-- Their [Discourse](https://community.fly.io) is helpful. It is often the best way to find specific information as the documentation does not cover everything. Specific example: I could not find documentation on how to download data from a volume, but reading through a few Discourse posts helped me figure it out at some point.
+- I ❤️ Fly.io. If an app requires more than what [Vercel](https://vercel.com) offers, I deploy it to Fly. They offer a great service and have a refreshing way of doing [marketing](https://fly.io/blog/) and [recruiting](https://fly.io/docs/hiring/hiring/).
+- I'm using their most basic functionality only. See [docs](https://fly.io/docs/) for all the fancy things they can do.
+- Their [community Discourse](https://community.fly.io) is helpful. It is often the best way to find specific information as the documentation does not cover everything. Specific example: I could not find documentation on how to download data from a volume, but reading through a few Discourse posts helped me figure it out at some point. _Important_: Don't forget to write how much you like DNSSEC and mention [thomas](https://community.fly.io/u/thomas/), this will give you priority support.
 
 <br />
 <small>
   Photo credits: [FX
-  Networks](https://www.fxnetworks.com/shows/its-always-sunny-in-philadelphia)
+  Networks](https://www.fxnetworks.com/shows/its-always-sunny-in-philadelphia) and [Yarn](https://www.getyarn.io/yarn-clip/6bcc1af5-1f8d-4131-8cfc-e429cbcdb5ad/gif).
 </small>
 
 [^1]: See details and alternatives to CNAME in the [documentation](https://fly.io/docs/app-guides/custom-domains-with-fly/).
