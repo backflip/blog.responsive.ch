@@ -12,16 +12,16 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@astrojs/image": "^0.11.4",
-    "@astrojs/mdx": "^0.11.6",
-    "@astrojs/rss": "^1.0.3",
-    "astro": "^1.6.7",
+    "@astrojs/image": "^0.13.0",
+    "@astrojs/mdx": "^0.15.1",
+    "@astrojs/rss": "^2.1.0",
+    "astro": "^2.0.2",
     "autoprefixer": "^10.4.13",
     "cssnano": "^5.1.14",
-    "linkedom": "^0.14.20",
-    "sharp": "^0.31.2"
+    "linkedom": "^0.14.21",
+    "sharp": "^0.31.3"
   },
   "devDependencies": {
-    "patch-package": "^6.5.0"
+    "patch-package": "^6.5.1"
   }
 }
