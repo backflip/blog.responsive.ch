@@ -51,6 +51,7 @@ code {
   overflow: auto;
   border-radius: 0.3em;
   font-size: 0.9em;
+  background: rgb(23, 27, 33) !important; /* Lighten default 'Github Dark' theme */
 }
 .astro-code code {
   background: transparent;
