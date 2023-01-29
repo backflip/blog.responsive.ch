@@ -11,4 +11,168 @@ I tend to read news in the evening. This is what I look like:
 
 Yes, I have mounted my smartphone to the wall.
 
-As websites like [watson.ch](https://www.watson.ch) or [vox.com](https://www.vox.com) don't seem to offer a dark mode, writing our own custom CSS is the quickest solution.
+As websites like [watson.ch](https://www.watson.ch) or [vox.com](https://www.vox.com) don't seem to offer a dark mode, writing my own custom styles is the quickest solution.
+
+Turns out there is a nice solution for that: [Userscripts](https://github.com/quoid/userscripts):
+
+> Userscripts is an open source Safari extension that lets you save and run arbitrary bits of JavaScript (and CSS) code for the websites you visit. It implements a code editor right in your browser for a simple method of creating, editing and saving your code.
+
+This is what my custom styles for watson.ch look like:
+
+```css
+/* ==UserStyle==
+@name        Watson Dark Mode
+@description Light text on dark background for watson.ch
+@match       https://www.watson.ch/*
+==/UserStyle== */
+
+:root {
+    --dark: rgb(43, 43, 43);
+    --light: rgb(255, 255, 255);
+    --light-secondary: rgba(255, 255, 255, 0.75);
+    --accent: rgb(244, 15, 151);
+}
+
+/* Default styles */
+body {
+    background: var(--dark) !important;
+    color: var(--light) !important;
+}
+
+/* Remove background */
+.cluster,
+.region,
+.teaser.teaser.teaser.teaser.teaser,
+.watson-footer,
+.watson-snippet__contextBoxList,
+.combo_bg,
+.mega_teaser_short_wrapper,
+.watson-snippet__tableOfContents__item,
+.watson-snippet__simple-infobox__box,
+.watson-snippet__result-table,
+.watson-teaser__image,
+.watson-ad {
+    background-color: transparent !important;
+}
+
+/* Remove border */
+.region,
+.cluster,
+.watson-discussion,
+.fat_wrapper {
+    border-color: transparent !important;
+}
+
+/* Remove custom font color */
+.text,
+.text h2 div,
+.teaser_type_default.combo_fg {
+    color: inherit !important;
+}
+
+/* Optimize specific visual elements */
+.watson-storybreadcrumbs__fade {
+    background-image: linear-gradient(to right, transparent, var(--dark)) !important;
+}
+.watson-next-story__actionbutton {
+    background-image: linear-gradient(to bottom, transparent, var(--dark)) !important;
+}
+.region .mega_teaser_short_wrapper::before {
+  border-bottom-color: var(--accent) !important;
+  top: -11px !important;
+}
+.watson-snippet__datawrapper iframe {
+  background-color: var(--light-secondary) !important;
+}
+```
+
+## Step by step
+
+1. It starts with a [somewhat standardized](https://github.com/openstyles/stylus/wiki/Writing-UserCSS) metadata block [^1]. An important part of it is specifying which pages the styles are supposed to be applied to.
+
+   ```css
+   /* ==UserStyle==
+   @name        Watson Dark Mode
+   @description Light text on dark background for watson.ch
+   @match       https://www.watson.ch/*
+   ==/UserStyle== */
+   ```
+
+2. Specification of the colors I intend to use as CSS custom properties:
+
+   ```css
+   :root {
+     --dark: rgb(43, 43, 43);
+     --light: rgb(255, 255, 255);
+     --light-secondary: rgba(255, 255, 255, 0.75);
+     --accent: rgb(244, 15, 151);
+   }
+   ```
+
+3. Application of the main colors to the body:
+
+   ```css
+   body {
+     background: var(--dark) !important;
+     color: var(--light) !important;
+   }
+   ```
+
+4. Removal of background and border colors on specific elements:
+
+   ```css
+   .cluster,
+   .region /*,
+   ... more selectors */ {
+     background-color: transparent !important;
+   }
+
+   .cluster,
+   .region /*,
+   ... more selectors */ {
+     border-color: transparent !important;
+   }
+   ```
+
+5. Removal of custom font colors on specific elements:
+
+   ```css
+   .text,
+   .text h2 div /*,
+   ... more selectors */ {
+     color: inherit !important;
+   }
+   ```
+
+6. Optimization of specific visual elements:
+
+   ```css
+   /* Optimize gradient colors */
+   .watson-storybreadcrumbs__fade {
+     background-image: linear-gradient(
+       to right,
+       transparent,
+       var(--dark)
+     ) !important;
+   }
+   /* ... */
+
+   /* Apply accent color where light/dark is not enough */
+   .region .mega_teaser_short_wrapper::before {
+     border-bottom-color: var(--accent) !important;
+     top: -11px !important;
+   }
+
+   /* Apply background color to iFrames as the embedded pages might not have one */
+   .watson-snippet__datawrapper iframe {
+     background-color: var(--light-secondary) !important;
+   }
+   ```
+
+## Process
+
+I use the Safari developer tools to inspect the page and decide what styles to apply to which element. Then I edit the styles in the Userscript extension page and reload the page.
+
+They styles are synced from my desktop to my iPhone via [iCloud sync](https://github.com/quoid/userscripts#usage).
+
+[^1]: See [GitHub issue](https://github.com/quoid/userscripts/issues/215) on the differences between what Userscripts supports and what alternative tools like Stylus do.
