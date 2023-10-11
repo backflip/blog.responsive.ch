@@ -52,6 +52,7 @@ code {
   border-radius: 0.3em;
   font-size: 0.9em;
   background: rgb(23, 27, 33) !important; /* Lighten default 'Github Dark' theme */
+  tab-size: 2;
 }
 .astro-code code {
   background: transparent;
