@@ -75,9 +75,11 @@ function insertContentIntoFeed({ feedFileName } = {}) {
           const postFile = readFileSync(postFilePath, "utf-8");
           const { document: postDocument } = parseHTML(postFile);
 
-          // Replace item description with post content
+          // Replace item description with post content (excluding h1)
           const postContent = postDocument.querySelector("main");
           const itemDescription = item.querySelector("description");
+
+          postContent.querySelector("h1")?.remove();
 
           itemDescription.innerHTML = `<![CDATA[${postContent.innerHTML}]]>`;
         });
