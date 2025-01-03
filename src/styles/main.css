@@ -1,3 +1,8 @@
+:root {
+  --color-code-light: lch(from white calc(l - 10) c h);
+  --color-code-dark: lch(from black calc(l + 20) c h);
+}
+
 header {
   padding-top: 1em;
 }
@@ -37,26 +42,29 @@ main img.screenshot {
   margin-bottom: 0;
 }
 
-code {
-  background: #2b2b2b;
-  color: #f8f8f2;
+code:not(.astro-code code) {
+  background: light-dark(var(--color-code-light), var(--color-code-dark));
   border-radius: 0.3em;
   font-size: 0.9em;
   padding-left: 0.2em;
   padding-right: 0.2em;
 }
 .astro-code {
+  background: var(--color-code-light) !important;
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
   border-radius: 0.3em;
   font-size: 0.9em;
-  background: rgb(23, 27, 33) !important; /* Lighten default 'Github Dark' theme */
   tab-size: 2;
 }
-.astro-code code {
-  background: transparent;
-  padding: 0;
+
+@media (prefers-color-scheme: dark) {
+  .astro-code,
+  .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
 }
 
 .image-table table {
@@ -77,6 +85,7 @@ footer {
   display: flex;
   align-items: center;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
   padding-top: 2em;
   gap: 1em;
   margin-top: 3em;
@@ -86,10 +95,4 @@ footer {
 footer img {
   width: 5.625rem;
   border-radius: 100%;
-}
-
-@media (prefers-color-scheme: dark) {
-  footer {
-    border-color: rgba(255, 255, 255, 0.1);
-  }
 }

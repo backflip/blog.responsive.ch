@@ -2,7 +2,6 @@ import { readFileSync, existsSync, fstat, writeFileSync } from "fs";
 import { URL } from "url";
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
-import image from "@astrojs/image";
 import { DOMParser, parseHTML } from "linkedom";
 
 /**
@@ -92,16 +91,16 @@ function insertContentIntoFeed({ feedFileName } = {}) {
 
 export default defineConfig({
   site: "https://blog.responsive.ch",
-  integrations: [
-    mdx(),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
-    }),
-    insertContentIntoFeed({ feedFileName: "rss.xml" }),
-  ],
+  integrations: [mdx(), insertContentIntoFeed({ feedFileName: "rss.xml" })],
   markdown: {
     remarkRehype: {
       footnoteLabelTagName: "h3",
+    },
+    shikiConfig: {
+      themes: {
+        light: "github-light",
+        dark: "github-dark",
+      },
     },
   },
 });

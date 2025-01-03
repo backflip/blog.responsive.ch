@@ -44,6 +44,11 @@ The result:
 
 <style set:html={`
 .icon-button {
+  appearance: none;
+  color: black;
+  background: white;
+  border: 1px solid;
+  border-radius: 5px;
 	display: inline-flex;
 	align-items: center;
 }
@@ -59,13 +64,13 @@ The result:
 
 <button type="button" class="icon-button">
   <svg>
-    <use xlink:href={`${symbols}#search`} />
+    <use xlink:href={`${symbols.src}#search`} />
   </svg>
   <span>Search</span>
 </button>
 <button type="button" class="icon-button">
   <svg>
-    <use xlink:href={`${symbols}#close`} />
+    <use xlink:href={`${symbols.src}#close`} />
   </svg>
   <span>Close</span>
 </button>
@@ -94,7 +99,7 @@ Unfortunately, the icon is not rendered:
 <style
   set:html={`
 .var-background::before {
-	background-image: url(${symbols}#search);
+	background-image: url(${symbols.src}#search);
 	content: "";
 	width: 2rem;
 	aspect-ratio: 1;
@@ -144,7 +149,7 @@ The updated result:
 <style
   set:html={`
 .var-view::before {
-	background-image: url(${hybrid}#search-view);
+	background-image: url(${hybrid.src}#search-view);
 }
 `}
 />
@@ -171,7 +176,7 @@ The final result:
   set:html={`
 .var-mask::before {
 	background: currentColor;
-	mask-image: url(${hybrid}#search-view);
+	mask-image: url(${hybrid.src}#search-view);
 }
 `}
 />
@@ -183,3 +188,4 @@ The final result:
 ## How to automate this?
 
 I'm currently using the highly recommended [svg-sprite](https://github.com/svg-sprite/svg-sprite) library to generate SVG sprites from a folder of icons. At the time of writing this article, it does not yet provide a [hybrid mode](https://github.com/svg-sprite/svg-sprite/issues/678). However, since its [compile method](https://github.com/svg-sprite/svg-sprite/blob/main/docs/api.md) returns both the generated SVG and all shapes, we can use the `symbol` [output mode](https://github.com/svg-sprite/svg-sprite/blob/main/docs/configuration.md#output-modes) and manually extend the generated SVG with a `<use ... /><view ... />` for each symbol by [looping through the shapes](https://github.com/svg-sprite/svg-sprite/issues/678#issuecomment-2257095890).
+
