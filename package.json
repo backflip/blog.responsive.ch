@@ -8,8 +8,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "postinstall": "patch-package"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.3",
@@ -17,10 +16,6 @@
     "astro": "^5.1.2",
     "autoprefixer": "^10.4.13",
     "cssnano": "^5.1.14",
-    "linkedom": "^0.14.21",
-    "sharp": "^0.31.3"
-  },
-  "devDependencies": {
-    "patch-package": "^6.5.1"
+    "linkedom": "^0.14.21"
   }
 }
