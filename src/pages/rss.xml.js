@@ -3,7 +3,7 @@ import rss from "@astrojs/rss";
 const postImportResult = import.meta.glob("../pages/**/*.mdx", { eager: true });
 const posts = Object.values(postImportResult);
 
-export const get = () =>
+export const GET = () =>
   rss({
     title: "blog.responsive.ch",
     description: "A blog about web technology and remotely related thingies.",
