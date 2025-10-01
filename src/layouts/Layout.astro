@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Fathom from "../components/Fathom.astro";
 import "../styles/main.css";
+import pkg from "../../package.json";
 
 const { root, frontmatter } = Astro.props;
 ---
@@ -19,7 +20,7 @@ const { root, frontmatter } = Astro.props;
     />
     <link
       rel="stylesheet"
-      href="https://www.responsive.ch/assets/index.DK3AnS7J.css"
+      href={`https://www.responsive.ch/assets/index.css?v${pkg.version}`}
     />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

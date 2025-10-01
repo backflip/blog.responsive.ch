@@ -1,0 +1,20 @@
+# fly.toml app configuration file generated for blog-responsive-ch on 2025-10-01T22:35:53+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'blog-responsive-ch'
+primary_region = 'fra'
+
+[build]
+
+[http_service]
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'
