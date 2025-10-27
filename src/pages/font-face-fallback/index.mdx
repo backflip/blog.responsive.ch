@@ -1,0 +1,25 @@
+---
+layout: ../../layouts/Layout.astro
+title: "@font-face Fallback"
+date: 2025-01-05
+abstract: Using <code>capsize</code> to minimize the impact of custom web fonts on cumulative layout shift.
+---
+
+import "./media/styles.css";
+
+Using custom fonts with reasonable [swapping behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display) may cause to the fallback font being to be visible before the custom font is loaded. Depending on the size difference between the two fonts, this can lead to layout shifts that are very annoying to users. And it negatively affects performance measurement metrics like [Cumulative Layout Shift (CLS)](https://web.dev/articles/cls).
+
+Following an example with `Bree Serif` on the left and `Georgia` on the right. Dependning in the viewport width, the height of the rendered text block differs up two multiple lines.
+
+<div className="font-demo">
+    <p className="font custom">I'm Brick Tamland. People seem to like me because I am polite and I am rarely late. I like to eat ice cream and I really enjoy a nice pair of slacks.</p>
+    <p className="font fallback">I'm Brick Tamland. People seem to like me because I am polite and I am rarely late. I like to eat ice cream and I really enjoy a nice pair of slacks.</p>
+</div>
+
+## Notes
+
+- https://www.npmjs.com/package/@capsizecss/core
+- https://www.npmjs.com/package/@capsizecss/metrics
+- https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/size-adjust
+- https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/ascent-override
+- https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/descent-override
