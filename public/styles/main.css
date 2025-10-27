@@ -42,29 +42,20 @@ main img.screenshot {
   margin-bottom: 0;
 }
 
-code:not(.astro-code code) {
+code:not(.shiki code) {
   background: light-dark(var(--color-code-light), var(--color-code-dark));
   border-radius: 0.3em;
   font-size: 0.9em;
   padding-left: 0.2em;
   padding-right: 0.2em;
 }
-.astro-code {
-  background: var(--color-code-light) !important;
+.shiki {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
   border-radius: 0.3em;
   font-size: 0.9em;
   tab-size: 2;
-}
-
-@media (prefers-color-scheme: dark) {
-  .astro-code,
-  .astro-code span {
-    color: var(--shiki-dark) !important;
-    background-color: var(--shiki-dark-bg) !important;
-  }
 }
 
 .image-table table {

@@ -9,9 +9,28 @@ import xml from "xml";
 import Layout from "../src/components/Layout.js";
 import Listing from "../src/components/Listing.js";
 import { html } from "../src/utils/html.js";
+import markedShiki from "marked-shiki";
+import { createHighlighter } from "shiki";
 
 const distDir = resolve(import.meta.dirname, "../dist");
 const pagesDir = resolve(import.meta.dirname, "../src/pages");
+
+// Setup syntax highlighter
+const highlighter = await createHighlighter({
+  langs: ["html", "bash", "json", "toml"],
+  themes: ["github-dark-dimmed"],
+});
+
+marked.use(
+  markedShiki({
+    highlight(code, lang, props) {
+      return highlighter.codeToHtml(code, {
+        lang,
+        theme: "github-dark-dimmed",
+      });
+    },
+  })
+);
 
 // Empty `dist` directory
 async function setup() {
