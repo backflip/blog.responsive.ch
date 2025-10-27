@@ -1,15 +1,8 @@
 ---
-layout: ../../layouts/Layout.astro
 title: Controlling our blinds via Siri
 date: 2020-03-15
 abstract: What Siri expects you to do before she opens your blinds. On using Home Assistant, a Raspberry Pi and Z-Wave-compatible shutters to avoid having to walk to your windows.
 ---
-
-import { Image } from "astro:assets";
-import aeotec from "./_media/aeotec.jpeg";
-import fibaro from "./_media/fibaro.jpeg";
-import qubino from "./_media/qubino.jpeg";
-import raspberry from "./_media/raspberry.jpeg";
 
 There are two approaches to automating window blinds:
 
@@ -32,7 +25,7 @@ For the radio setup, I decided on the [Z-Wave](https://en.wikipedia.org/wiki/Z-W
 
 | [Aeotec Nano Shutter](https://aeotec.com/z-wave-motor-shutter-curtain-control/) | [Fibaro Roller Shutter 3](https://www.fibaro.com/en/products/smart-roller-shutter/) | [Qubino Flush Shutter](https://qubino.com/products/flush-shutter/) |
 | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| <Image src={aeotec} alt="Aeotec Nano Shutter" width={420} />                    | <Image src={fibaro} alt="Fibaro Roller Shutter 3" width={420} />                    | <Image src={qubino} alt="Qubino Flush Shutter" width={420} />      |
+| ![Aeotec Nano Shutter](media/aeotec.jpeg?w=420)                               | ![Fibaro Roller Shutter 3](media/fibaro.jpeg?w=420)                               | ![Qubino Flush Shutter](media/qubino.jpeg?w=420)                 |
 
 </div>
 
@@ -55,7 +48,7 @@ Everything else was smooth as an android's bottom. That is until I wasn't able t
 
 <figure>
 
-<Image src={raspberry} alt="Raspberry" width={700} />
+![Raspberry](media/raspberry.jpeg)
 
 <figcaption>
 

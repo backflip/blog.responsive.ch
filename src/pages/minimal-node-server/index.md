@@ -1,14 +1,8 @@
 ---
-layout: ../../layouts/Layout.astro
 title: Minimal Node.js server
 date: 2023-10-11
 abstract: A simple server with basic routing, body parsing, and dev watch mode with less than a gigabyte of npm dependencies? Is it possible?
 ---
-
-import { Image } from "astro:assets";
-import index from "./_media/index.png";
-import form from "./_media/form.png";
-import formPost from "./_media/form-post.png";
 
 I absolutely love building small web applications.
 
@@ -35,9 +29,9 @@ My new setup:
 
 The demo app has two routes, one of them handling POST requests (assuming the `x-www-form-urlencoded` content type of a basic `<form method="POST">`):
 
-- `GET /`: <Image src={index} alt="index route" />
-- `GET /form`: <Image src={form} alt="form route" />
-- `POST /form`: <Image src={formPost} alt="form route after POST request" />
+- `GET /`: ![index route](media/index.png)
+- `GET /form`: ![form route](media/form.png)
+- `POST /form`: ![form route after POST request](media/form-post.png)
 
 ## What we need
 
@@ -55,29 +49,29 @@ const port = process.env.PORT || 3000;
  * @returns {Promise<{ [key: string]: string | string[] }>}
  */
 async function parseBody(req) {
-	const body = await new Promise((resolve) => {
-		let data = [];
+  const body = await new Promise((resolve) => {
+    let data = [];
 
-		req
-			.on("data", (chunk) => {
-				data.push(chunk);
-			})
-			.on("end", () => {
-				const str = Buffer.concat(data).toString();
-				const searchParams = new URLSearchParams(str);
-				const obj = {};
+    req
+      .on("data", (chunk) => {
+        data.push(chunk);
+      })
+      .on("end", () => {
+        const str = Buffer.concat(data).toString();
+        const searchParams = new URLSearchParams(str);
+        const obj = {};
 
-				for (const key of searchParams.keys()) {
-					const values = searchParams.getAll(key);
+        for (const key of searchParams.keys()) {
+          const values = searchParams.getAll(key);
 
-					obj[key] = values.length > 1 ? values : values[0];
-				}
+          obj[key] = values.length > 1 ? values : values[0];
+        }
 
-				return resolve(obj);
-			});
-	});
+        return resolve(obj);
+      });
+  });
 
-	return body;
+  return body;
 }
 
 /**
@@ -86,7 +80,7 @@ async function parseBody(req) {
  * @returns {string}
  */
 function renderHtml({ title = "Title", content = "Content" } = {}) {
-	return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 		<html lang="en">
 			<head>
 				<meta charset="utf-8">
@@ -106,34 +100,34 @@ function renderHtml({ title = "Title", content = "Content" } = {}) {
  * Start server on `port`
  */
 http
-	.createServer(async (req, res) => {
-		const requestUrl = new URL(req.url || "", `http://${req.headers.host}`);
+  .createServer(async (req, res) => {
+    const requestUrl = new URL(req.url || "", `http://${req.headers.host}`);
 
-		// Route: `/`
-		if (requestUrl.pathname === "/") {
-			const html = renderHtml({
-				content: `<p><a href="/form">Form example</a></p>`,
-			});
+    // Route: `/`
+    if (requestUrl.pathname === "/") {
+      const html = renderHtml({
+        content: `<p><a href="/form">Form example</a></p>`,
+      });
 
-			res.writeHead(200, { "Content-Type": "text/html" });
-			res.end(html);
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(html);
 
-			return;
-		}
+      return;
+    }
 
-		// Route: `/form`
-		if (requestUrl.pathname === "/form") {
-			let message = "";
+    // Route: `/form`
+    if (requestUrl.pathname === "/form") {
+      let message = "";
 
-			if (req.method === "POST") {
-				const body = await parseBody(req);
+      if (req.method === "POST") {
+        const body = await parseBody(req);
 
-				message = `<pre>body: ${JSON.stringify(body, null, "  ")}</pre>`;
-			}
+        message = `<pre>body: ${JSON.stringify(body, null, "  ")}</pre>`;
+      }
 
-			const html = renderHtml({
-				title: "Form",
-				content: `${message}
+      const html = renderHtml({
+        title: "Form",
+        content: `${message}
 					<form action="" method="POST">
 						<p>
 							<label for="name">Name</label>
@@ -143,17 +137,17 @@ http
 					</form>
 					<p><a href="/">Back to index</a></p>
 				`,
-			});
+      });
 
-			res.writeHead(200, { "Content-Type": "text/html" });
-			res.end(html);
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(html);
 
-			return;
-		}
-	})
-	.listen(port, () => {
-		console.log(`App is running on port ${port}: http://localhost:${port}`);
-	});
+      return;
+    }
+  })
+  .listen(port, () => {
+    console.log(`App is running on port ${port}: http://localhost:${port}`);
+  });
 ```
 
 The most complex part of it is parsing the request body (`function parseBody`). It would be even shorter if we ignored multiple values with the same key.
@@ -162,16 +156,16 @@ And this is the complete `package.json`:
 
 ```json
 {
-	"name": "my-little-wep-app",
-	"version": "0.0.1",
-	"type": "module",
-	"scripts": {
-		"start": "node index.js",
-		"dev": "node --watch index.js"
-	},
-	"engines": {
-		"node": ">= 18.11"
-	}
+  "name": "my-little-wep-app",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "engines": {
+    "node": ">= 18.11"
+  }
 }
 ```
 

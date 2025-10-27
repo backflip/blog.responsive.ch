@@ -1,23 +1,12 @@
 ---
-layout: ../../layouts/Layout.astro
 title: Fun with polyfills
 date: 2020-12-31
 abstract: How to remove the equivalent of multiple football fields from your JavaScript bundles by customizing <code class="language-text">@babel/preset-env</code>.
 ---
 
-import { Image } from "astro:assets";
-import ride from "./_media/ride.png";
-import analysis from "./_media/analysis.png";
-import success from "./_media/success.png";
-
 Using new JavaScript syntax or features while still supporting older browsers requires us to transpile and polyfill our code before deployment. The tool of choice is usually [Babel](https://babeljs.io/). Its [preset-env](https://babeljs.io/docs/en/babel-preset-env) plugin hides most of the complexity and allows us to simply specify a list of browsers to support, sit back and enjoy the ride. However, the ride might take an unexpected turn when analyzing the generated code.
 
-<Image
-  src={ride}
-  alt="Dee and Dennis on a ride in episode 'The Gang Goes to the Jersey Shore' of 'It's Always Sunny in Philadelphia"
-  width={700}
-  format="webp"
-/>
+![Dee and Dennis on a ride in episode 'The Gang Goes to the Jersey Shore' of 'It's Always Sunny in Philadelphia](media/ride.png)
 
 Let's say we want to log all links on a page:
 
@@ -59,12 +48,7 @@ Babel slightly disagrees and rewrites it to the following code instead:
 
 Why oh why? Let's see how we got there.
 
-<Image
-  src={analysis}
-  alt="Mac explaining things in 'Reynolds vs. Reynolds: The Cereal Defense' of 'It's Always Sunny in Philadelphia'"
-  width={700}
-  format="webp"
-/>
+![Mac explaining things in 'Reynolds vs. Reynolds: The Cereal Defense' of 'It's Always Sunny in Philadelphia'](media/analysis.png)
 
 ## Basic setup
 
@@ -226,12 +210,7 @@ window.NodeList &&
   });
 ```
 
-<Image
-  src={success}
-  alt="Glenn Howerton, Rob McElhenney and Charlie Day giving the thumbs up"
-  width={700}
-  format="webp"
-/>
+![Glenn Howerton, Rob McElhenney and Charlie Day giving the thumbs up](media/success.png)
 
 However, as we don't want to go back to manually copying polyfills, we could at least import something like [mdn-polyfills](https://github.com/msn0/mdn-polyfills) instead:
 

@@ -1,26 +1,12 @@
 ---
-layout: ../../layouts/Layout.astro
 title: Setting up a Mac
 date: 2021-02-13
 abstract: Who doesn't like the smell of fresh apples in the morning?
 ---
 
-import { Image } from "astro:assets";
-import alfredCaniuse from "./_media/alfred-caniuse.png";
-import alfredDash from "./_media/alfred-dash.png";
-import alfredNpm from "./_media/alfred-npm.png";
-import dato from "./_media/dato.png";
-import login from "./_media/login.png";
-import snl from "./_media/snl.png";
-
 First thing I do is some login screen gardening: Displaying my best self-portrait and [adding contact information](https://support.apple.com/en-bn/guide/mac-help/mh35890/mac). This way, I don't have to remember taking my MacBook with me when leaving the coffee shop.
 
-<Image
-  src={login}
-  alt="Login screen with white avatar, name and phone number"
-  width={700}
-  format="webp"
-/>
+![Login screen with white avatar, name and phone number](media/login.png)
 
 The first app I install is [1Password](https://1password.com). It allows me to log into Github to download my `.zshrc`, `.gitconfig` and other preference files. Like the cool kids, I started out with a setup script. However, I always forgot to maintain it and ended up with outdated preferences. Now, I just push the system and application preferences I care about (e.g. `com.apple.dock.plist`) to Github right before setting up a new machine.
 
@@ -30,47 +16,23 @@ The second app I can't live without is [Alfred](https://www.alfredapp.com). High
 
 1. Opening the docs for a specific feature in [Dash](https://kapeli.com/dash):
 
-   <Image
-     src={alfredDash}
-     alt="Dash integration in Alfred"
-     width={700}
-     format="webp"
-   />
+   ![Dash integration in Alfred](media/alfred-dash.png)
 
 2. Checking its [browser support](https://github.com/willfarrell/alfred-caniuse-workflow):
 
-   <Image
-     src={alfredCaniuse}
-     alt="Can i use integration in Alfred"
-     width={700}
-     format="webp"
-   />
+   ![Can i use integration in Alfred](media/alfred-caniuse.png)
 
 3. Finding a polyfill on [npm](https://github.com/sindresorhus/alfred-npms):
-   <Image
-     src={alfredNpm}
-     alt="npm package search in Alfred"
-     width={700}
-     format="webp"
-   />
+
+   ![npm package search in Alfred](media/alfred-npm.png)
 
 The third one is [Rectangle](https://rectangleapp.com). It is used by [fellow CEOs](https://github.com/rxhanson/Rectangle/commits/master?before=57ac4a51bbb3cd0250f6bbf1d0e23573a2e6dd80+35&branch=master) and allows me to move around windows via keyboard (or mouse). When working on a widescreen display, I usually want to have two windows next to eachother. So whenever I open an app, I press <kbd>^⌥←</kbd> or <kbd>^⌥→</kbd> to use one or the other screen half. Another important use-case is catching up with SNL in an efficient way:
 
-<Image
-  src={snl}
-  alt="Four windows displaying the SNL YouTube channel"
-  width={700}
-  format="webp"
-/>
+![Four windows displaying the SNL YouTube channel](media/snl.png)
 
 Moving on to the menu bar, I use [Dato](https://sindresorhus.com/dato) to display the current week number and have immediate access to the calendar. As you can see, I'm very good at calendaring:
 
-<Image
-  src={dato}
-  alt="Screenshot of expanded calendar view in Dato"
-  width={700}
-  format="webp"
-/>
+![Screenshot of expanded calendar view in Dato](media/dato.png)
 
 The other menu bar app I approve of is [Lungo](https://sindresorhus.com/lungo). Why should your Mac be able to sleep when you can't?
 

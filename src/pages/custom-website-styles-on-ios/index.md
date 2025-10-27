@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/Layout.astro
 title: Custom Website Styles on iOS
 date: 2023-10-08
 abstract: Blinded by the light? Create your own dark modes for light websites.

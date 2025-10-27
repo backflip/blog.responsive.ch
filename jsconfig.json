@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "module": "preserve",
+    "target": "esnext",
+    "noEmit": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "exclude": ["**/dist"]
+}
