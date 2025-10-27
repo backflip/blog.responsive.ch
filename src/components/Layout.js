@@ -3,7 +3,7 @@ import Fathom from "./Fathom.js";
 import pkg from "../../package.json" with { type: "json" };
 
 /**
- * @param {{ title: string, content: string; root?: boolean }} props
+ * @param {{ title?: string, content: string; root?: boolean }} props
  * @returns {string}
  */
 export default ({ title, content, root }) => html`<html lang="en">

@@ -1,32 +1,85 @@
 #!/usr/bin/env node
 import { cp, glob, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { basename, dirname, resolve } from "node:path";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { styleText } from "node:util";
 import fm from "front-matter";
 import { marked } from "marked";
+import xml from "xml";
 import Layout from "../src/components/Layout.js";
+import Listing from "../src/components/Listing.js";
+import { html } from "../src/utils/html.js";
 
 const distDir = resolve(import.meta.dirname, "../dist");
+const pagesDir = resolve(import.meta.dirname, "../src/pages");
 
 // Empty `dist` directory
 async function setup() {
   if (existsSync(distDir)) {
     await rm(distDir, { recursive: true });
   }
+
+  await mkdir(distDir, { recursive: true });
 }
 
-// Compile `src/pages/**/index.md` to `dist/**/index.html` and copy their `media/` assets
-async function buildPages() {
-  const pagesDir = resolve(import.meta.dirname, "../src/pages");
-  const pages = await glob(`${pagesDir}/**/index.md`);
+/**
+ * Find `src/pages/**\/index.md`, extract frontmatter and compile markdown to HTML
+ * @return {Promise<Array<import("../types.js").Page | import("../types.js").Post>>}
+ */
+async function getPages() {
+  const pagesSrc = await glob(`${pagesDir}/**/index.md`);
 
-  for await (const srcPath of pages) {
+  /** @type {Array<import("../types.js").Page | import("../types.js").Post>} */
+  const pages = [];
+
+  for await (const srcPath of pagesSrc) {
     const markdown = await readFile(srcPath, "utf-8");
     const { attributes, body } = fm(markdown);
-
     const content = await marked.parse(body);
-    const page = Layout({ title: attributes.title, content });
+    const url = `/${dirname(relative(pagesDir, srcPath))}`;
+
+    /** @type {import("../types.js").Page} */
+    const page = {
+      title: attributes.title,
+      url,
+      content,
+      srcPath,
+    };
+
+    if (attributes.date) {
+      const dateFormatted = attributes.date?.toLocaleDateString("en-EN", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+
+      const post = {
+        ...page,
+        abstract: attributes.abstract,
+        date: attributes.date,
+        dateFormatted,
+      };
+
+      pages.push(post);
+
+      continue;
+    }
+
+    pages.push(page);
+  }
+
+  return pages;
+}
+
+/**
+ * Compile `src/pages/**\/index.md` to `dist/**\/index.html` and copy their `media/` assets
+ * @param {{ pages: import("../types.js").Page[] }} props
+ */
+async function buildPages({ pages }) {
+  for (const page of pages) {
+    const { title, content, srcPath } = page;
+
+    const html = Layout({ title, content });
 
     const pageDir = dirname(srcPath);
     const pageDistDir = pageDir.replace(pagesDir, distDir);
@@ -37,7 +90,7 @@ async function buildPages() {
 
     await mkdir(pageDistDir, { recursive: true });
 
-    await writeFile(pageDistPath, page);
+    await writeFile(pageDistPath, html);
 
     const pageMediaDir = resolve(pageDir, "media");
 
@@ -50,10 +103,76 @@ async function buildPages() {
     console.log(
       `${styleText(
         "green",
-        "[buildPages]"
+        "[buildPosts]"
       )} Built ${pageDistPath} and copied its media assets`
     );
   }
+}
+
+/**
+ * Create overview
+ * @param {{ posts: import("../types.js").Post[] }} props
+ */
+async function buildOverview({ posts }) {
+  const listing = Listing({ posts });
+  const page = Layout({ content: listing });
+
+  const distPath = join(distDir, "index.html");
+
+  await writeFile(distPath, page);
+
+  console.log(`${styleText("green", "[buildOverview]")} Built overview page`);
+}
+
+/**
+ * Create feed
+ * @param {{ posts: import("../types.js").Post[] }} props
+ */
+async function buildFeed({ posts }) {
+  const feed = xml([
+    {
+      rss: [
+        { _attr: { version: "2.0" } },
+        {
+          channel: [
+            { title: "blog.responsive.ch" },
+            {
+              description:
+                "A blog about web technology and remotely related thingies.",
+            },
+            { link: "https://blog.responsive.ch/" },
+            ...posts
+              .filter((post) => post.date)
+              .map((post) => ({
+                item: [
+                  { title: post.title },
+                  { link: `https://blog.responsive.ch${post.url}/` },
+                  {
+                    guid: [
+                      {
+                        _attr: { isPermaLink: "true" },
+                      },
+                      `https://blog.responsive.ch${post.url}/`,
+                    ],
+                  },
+                  { pubDate: post.date.toUTCString() },
+                  { description: { _cdata: post.content } },
+                ],
+              })),
+          ],
+        },
+      ],
+    },
+  ]);
+
+  const distPath = join(distDir, "rss.xml");
+
+  await writeFile(
+    distPath,
+    html`<?xml version="1.0" encoding="utf-8"?>${feed}`
+  );
+
+  console.log(`${styleText("green", "[buildFeed]")} Built RSS feed`);
 }
 
 // Copy static files from `public/` to `dist/`
@@ -68,9 +187,19 @@ async function copyPublic() {
 }
 
 async function build() {
+  const pages = await getPages();
+  const posts = pages
+    .filter((page) => "date" in page)
+    .sort((a, b) => b.date.getTime() - a.date.getTime());
+
   await setup();
 
-  await Promise.all([buildPages(), copyPublic()]);
+  await Promise.all([
+    buildPages({ pages }),
+    buildOverview({ posts }),
+    buildFeed({ posts }),
+    copyPublic(),
+  ]);
 }
 
 await build();
