@@ -40,7 +40,7 @@ async function transformStyles() {
 /**
  * Process images
  * - Extract image URLs from built HTML using LinkeDOM
- * - Optimize size (resize to IMAGE_MAX_WIDTH or specific dimensions if `width` and/or `height` attributes are present) with Sharp
+ * - Optimize size (resize to IMAGE_MAX_WIDTH or specific dimensions if `w` and/or `h` query parameters are present) with Sharp
  * - Convert to WebP with Sharp
  */
 async function processImages() {
@@ -107,10 +107,10 @@ async function processImages() {
         },
       );
 
-      if (width) {
+      if (widthParam) {
         image.setAttribute("width", String(width));
       }
-      if (height) {
+      if (heightParam) {
         image.setAttribute("height", String(height));
       }
 
