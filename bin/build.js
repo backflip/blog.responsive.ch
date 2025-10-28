@@ -5,15 +5,29 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import { styleText } from "node:util";
 import fm from "front-matter";
 import { marked } from "marked";
+import markedShiki from "marked-shiki";
+import { createHighlighter } from "shiki";
 import xml from "xml";
 import Layout from "../src/components/Layout.js";
 import Listing from "../src/components/Listing.js";
 import { html } from "../src/utils/html.js";
-import markedShiki from "marked-shiki";
-import { createHighlighter } from "shiki";
+
+/**
+ * Static site builder
+ * - Compiles `src/pages/**\/index.md` to `dist/**\/index.html`, adds syntax highlighting to code blocks.
+ * - Creates `dist/index.html` overview page listing all pages with a `date` front matter field.
+ * - Creates `dist/rss.xml` feed listing all pages with a `date` front matter field.
+ * - Copies `src/pages/**\/media/` to `dist/**\/media/`.
+ * - Copies `public/` to `dist/`.
+ */
 
 const distDir = resolve(import.meta.dirname, "../dist");
 const pagesDir = resolve(import.meta.dirname, "../src/pages");
+
+const DOMAIN = "https://blog.responsive.ch";
+const SITE_TITLE = "blog.responsive.ch";
+const SITE_DESCRIPTION =
+  "A blog about web technology and remotely related thingies.";
 
 // Setup syntax highlighter
 const highlighter = await createHighlighter({
@@ -29,10 +43,12 @@ marked.use(
         theme: "github-dark-dimmed",
       });
     },
-  })
+  }),
 );
 
-// Empty `dist` directory
+/**
+ * Empty `dist` directory
+ */
 async function setup() {
   if (existsSync(distDir)) {
     await rm(distDir, { recursive: true });
@@ -42,13 +58,13 @@ async function setup() {
 }
 
 /**
- * Find `src/pages/**\/index.md`, extract frontmatter and compile markdown to HTML
- * @return {Promise<Array<import("../types.js").Page | import("../types.js").Post>>}
+ * Find `src/pages/**\/index.md`, extract front matter and compile markdown to HTML
+ * @return {Promise<import("../types.js").Page[]>}
  */
 async function getPages() {
   const pagesSrc = await glob(`${pagesDir}/**/index.md`);
 
-  /** @type {Array<import("../types.js").Page | import("../types.js").Post>} */
+  /** @type {import("../types.js").Page[]} */
   const pages = [];
 
   for await (const srcPath of pagesSrc) {
@@ -98,13 +114,17 @@ async function buildPages({ pages }) {
   for (const page of pages) {
     const { title, content, srcPath } = page;
 
-    const html = Layout({ title, content });
+    const html = Layout({
+      title,
+      content,
+      description: "abstract" in page ? page.abstract : undefined,
+    });
 
     const pageDir = dirname(srcPath);
     const pageDistDir = pageDir.replace(pagesDir, distDir);
     const pageDistPath = resolve(
       pageDistDir,
-      `${basename(srcPath, ".md")}.html`
+      `${basename(srcPath, ".md")}.html`,
     );
 
     await mkdir(pageDistDir, { recursive: true });
@@ -122,8 +142,8 @@ async function buildPages({ pages }) {
     console.log(
       `${styleText(
         "green",
-        "[buildPosts]"
-      )} Built ${pageDistPath} and copied its media assets`
+        "[buildPosts]",
+      )} Built ${pageDistPath} and copied its media assets`,
     );
   }
 }
@@ -134,7 +154,7 @@ async function buildPages({ pages }) {
  */
 async function buildOverview({ posts }) {
   const listing = Listing({ posts });
-  const page = Layout({ content: listing });
+  const page = Layout({ content: listing, description: SITE_DESCRIPTION });
 
   const distPath = join(distDir, "index.html");
 
@@ -154,30 +174,24 @@ async function buildFeed({ posts }) {
         { _attr: { version: "2.0" } },
         {
           channel: [
-            { title: "blog.responsive.ch" },
-            {
-              description:
-                "A blog about web technology and remotely related thingies.",
-            },
-            { link: "https://blog.responsive.ch/" },
+            { title: SITE_TITLE },
+            { description: SITE_DESCRIPTION },
+            { link: DOMAIN },
             ...posts
               .filter((post) => post.date)
-              .map((post) => ({
-                item: [
-                  { title: post.title },
-                  { link: `https://blog.responsive.ch${post.url}/` },
-                  {
-                    guid: [
-                      {
-                        _attr: { isPermaLink: "true" },
-                      },
-                      `https://blog.responsive.ch${post.url}/`,
-                    ],
-                  },
-                  { pubDate: post.date.toUTCString() },
-                  { description: { _cdata: post.content } },
-                ],
-              })),
+              .map((post) => {
+                const url = `${DOMAIN}${post.url}/`;
+
+                return {
+                  item: [
+                    { title: post.title },
+                    { link: url },
+                    { guid: [{ _attr: { isPermaLink: "true" } }, url] },
+                    { pubDate: post.date.toUTCString() },
+                    { description: { _cdata: post.content } },
+                  ],
+                };
+              }),
           ],
         },
       ],
@@ -188,23 +202,28 @@ async function buildFeed({ posts }) {
 
   await writeFile(
     distPath,
-    html`<?xml version="1.0" encoding="utf-8"?>${feed}`
+    html`<?xml version="1.0" encoding="utf-8"?>${feed}`,
   );
 
   console.log(`${styleText("green", "[buildFeed]")} Built RSS feed`);
 }
 
-// Copy static files from `public/` to `dist/`
+/**
+ * Copy static files from `public/` to `dist/`
+ */
 async function copyPublic() {
   const srcDir = resolve(import.meta.dirname, "../public");
 
   await cp(srcDir, distDir, { recursive: true });
 
   console.log(
-    `${styleText("green", "[copyPublic]")} Copied \`public/\` to ${distDir}`
+    `${styleText("green", "[copyPublic]")} Copied \`public/\` to ${distDir}`,
   );
 }
 
+/**
+ * Put everything together
+ */
 async function build() {
   const pages = await getPages();
   const posts = pages

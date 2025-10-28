@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "./bin/build.js",
+    "dev": "python3 -m http.server -d dist",
     "postbuild": "./bin/postprocess.js",
     "typecheck": "tsc -p jsconfig.json"
   },

@@ -6,9 +6,20 @@ import { transform } from "lightningcss";
 import sharp from "sharp";
 import { parseHTML } from "linkedom";
 
+/**
+ * Post-processing of static site builder
+ * - Processes `dist/styles/main.css` with LightningCSS.
+ * - Processes images by extracting them from built HTML with LinkeDOM and optimizing size and format with Sharp.
+ */
+
 const distDir = resolve(import.meta.dirname, "../dist");
 
-// Process CSS with LightningCSS
+const IMAGE_MAX_WIDTH = 800;
+const IMAGE_FORMATS_TO_CONVERT = ["jpg", "jpeg", "png"];
+
+/**
+ * Process CSS with LightningCSS
+ */
 async function transformStyles() {
   const stylesPath = resolve(distDir, "styles/main.css");
   const styles = await readFile(stylesPath);
@@ -22,11 +33,16 @@ async function transformStyles() {
   await writeFile(stylesPath, code);
 
   console.log(
-    `${styleText("green", "[transformStyles]")} Transformed ${stylesPath}`
+    `${styleText("green", "[transformStyles]")} Transformed ${stylesPath}`,
   );
 }
 
-// Process images
+/**
+ * Process images
+ * - Extract image URLs from built HTML using LinkeDOM
+ * - Optimize size (resize to IMAGE_MAX_WIDTH or specific dimensions if `width` and/or `height` attributes are present) with Sharp
+ * - Convert to WebP with Sharp
+ */
 async function processImages() {
   const pages = await glob(`${distDir}/**/*.html`);
 
@@ -44,31 +60,43 @@ async function processImages() {
           return true;
         }
       })
-      // Ignore `.webp` images
+      // Ignore GIFs and SVGs
       .filter((img) => {
-        const url = new URL(img.src, "http://localhost");
+        const filePath = new URL(img.src, "http://localhost").pathname;
+        const format = extname(filePath).replace(".", "").toLowerCase();
 
-        return !url.pathname.match(/\.webp$/);
+        return !["gif", "svg"].includes(format);
       });
 
     for (const image of images) {
       const resolvedSrc = resolve(dirname(page), image.src);
       const filePath = new URL(resolvedSrc, "file://").pathname;
-      const distPath = filePath.replace(extname(filePath), ".webp");
+      const content = await readFile(filePath);
+      const format = extname(filePath).replace(".", "").toLowerCase();
 
-      const transformed = await sharp(filePath);
+      let distPath = filePath;
+
+      const url = new URL(image.src, "http://localhost");
+      const transformed = await sharp(content);
 
       // Transform to webp
-      await transformed.webp({ quality: 75 });
+      if (IMAGE_FORMATS_TO_CONVERT.includes(format)) {
+        await transformed.webp({ quality: 75 });
+
+        distPath = distPath.replace(`.${format}`, ".webp");
+
+        image.src = url.pathname
+          .replace(new RegExp(`.${format}$`), ".webp")
+          .replace(/^\//, "");
+      }
 
       // Resize
       // Check for width (`w`) and height (`h`) query parameters, fall back to max-width of 800px
       // Duplicate by 2x for high-res displays
-      const url = new URL(image.src, "http://localhost");
       const widthParam = url.searchParams.get("w");
       const heightParam = url.searchParams.get("h");
 
-      const width = widthParam ? parseInt(widthParam, 10) : 800;
+      const width = widthParam ? parseInt(widthParam, 10) : IMAGE_MAX_WIDTH;
       const height = heightParam ? parseInt(heightParam, 10) : undefined;
 
       await transformed.resize(
@@ -76,30 +104,23 @@ async function processImages() {
         height ? 2 * height : undefined,
         {
           withoutEnlargement: true,
-        }
+        },
       );
+
+      if (width) {
+        image.setAttribute("width", String(width));
+      }
+      if (height) {
+        image.setAttribute("height", String(height));
+      }
 
       // Save
       await transformed.toFile(distPath);
 
-      // Update image node in HTML
-      if (width || height) {
-        image.src = url.pathname
-          .replace(extname(filePath), ".webp")
-          .replace(/^\//, "");
-
-        if (width) {
-          image.setAttribute("width", String(width));
-        }
-        if (height) {
-          image.setAttribute("height", String(height));
-        }
-      }
-
       console.log(
         `${styleText("green", "[processImages]")} Created ${distPath} (${
           width || ""
-        }x${height || ""})`
+        }x${height || ""})`,
       );
     }
 
@@ -111,6 +132,9 @@ async function processImages() {
   }
 }
 
+/**
+ * Put everything together
+ */
 async function postProcess() {
   await Promise.all([transformStyles(), processImages()]);
 }
