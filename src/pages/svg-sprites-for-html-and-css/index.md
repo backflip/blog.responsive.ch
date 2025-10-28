@@ -1,12 +1,8 @@
 ---
-layout: ../../layouts/Layout.astro
 title: SVG Sprites for HTML and CSS
 date: 2024-07-30
 abstract: How to use the same SVG sprite in both HTML and CSS
 ---
-
-import symbols from "./_media/sprite-symbols.svg";
-import hybrid from "./_media/sprite-hybrid.svg";
 
 SVG sprites are a great way to serve icons. They have been around for [quite some time](https://css-tricks.com/svg-sprites-use-better-icon-fonts/).
 
@@ -42,7 +38,7 @@ The basic approach:
 
 The result:
 
-<style set:html={`
+<style>
 .icon-button {
   appearance: none;
   color: black;
@@ -60,17 +56,18 @@ The result:
 .icon-button:hover,
 .icon-button:focus {
 	color: red;
-}`} />
+}
+</style>
 
 <button type="button" class="icon-button">
   <svg>
-    <use xlink:href={`${symbols.src}#search`} />
+    <use xlink:href="media/sprite-symbols.svg#search" />
   </svg>
   <span>Search</span>
 </button>
 <button type="button" class="icon-button">
   <svg>
-    <use xlink:href={`${symbols.src}#close`} />
+    <use xlink:href="media/sprite-symbols.svg#close" />
   </svg>
   <span>Close</span>
 </button>
@@ -83,28 +80,25 @@ Let's add a background image:
 
 ```html
 <style>
-.var-background::before {
-	background-image: url(sprite-symbols.svg#search);
-	/* ... */
-}
+  .var-background::before {
+    background-image: url(sprite-symbols.svg#search);
+    /* ... */
+  }
 </style>
 
-<button type="button" class="icon-button var-background">
-  Search
-</button>
+<button type="button" class="icon-button var-background">Search</button>
 ```
 
 Unfortunately, the icon is not rendered:
 
-<style
-  set:html={`
+<style>
 .var-background::before {
-	background-image: url(${symbols.src}#search);
+	background-image: url(media/sprite-symbols.svg#search);
 	content: "";
 	width: 2rem;
 	aspect-ratio: 1;
-}`}
-/>
+}
+</style>
 
 <button type="button" class="icon-button var-background">
   <span>Search</span>
@@ -139,20 +133,18 @@ Now we can use the fragment identifier of the new `<view id="search-view" />` el
 
 ```css
 .var-view::before {
-	background-image: url(sprite-hybrid.svg#search-view);
-	/* ... */
+  background-image: url(sprite-hybrid.svg#search-view);
+  /* ... */
 }
 ```
 
 The updated result:
 
-<style
-  set:html={`
+<style>
 .var-view::before {
-	background-image: url(${hybrid.src}#search-view);
+	background-image: url(media/sprite-hybrid.svg#search-view);
 }
-`}
-/>
+</style>
 
 <button type="button" class="icon-button var-background var-view">
   <span>Search</span>
@@ -164,22 +156,20 @@ The updated result:
 
 ```css
 .var-mask::before {
-	background: currentColor;
-	mask-image: url(sprite-hybrid.svg#search-view);
-	/** ... */
+  background: currentColor;
+  mask-image: url(sprite-hybrid.svg#search-view);
+  /** ... */
 }
 ```
 
 The final result:
 
-<style
-  set:html={`
+<style>
 .var-mask::before {
 	background: currentColor;
-	mask-image: url(${hybrid.src}#search-view);
+	mask-image: url(media/sprite-hybrid.svg#search-view);
 }
-`}
-/>
+</style>
 
 <button type="button" class="icon-button var-background var-view var-mask">
   <span>Search</span>
@@ -188,4 +178,3 @@ The final result:
 ## How to automate this?
 
 I'm currently using the highly recommended [svg-sprite](https://github.com/svg-sprite/svg-sprite) library to generate SVG sprites from a folder of icons. At the time of writing this article, it does not yet provide a [hybrid mode](https://github.com/svg-sprite/svg-sprite/issues/678). However, since its [compile method](https://github.com/svg-sprite/svg-sprite/blob/main/docs/api.md) returns both the generated SVG and all shapes, we can use the `symbol` [output mode](https://github.com/svg-sprite/svg-sprite/blob/main/docs/configuration.md#output-modes) and manually extend the generated SVG with a `<use ... /><view ... />` for each symbol by [looping through the shapes](https://github.com/svg-sprite/svg-sprite/issues/678#issuecomment-2257095890).
-

@@ -1,14 +1,8 @@
 ---
-layout: ../../layouts/Layout.astro
 title: Free analytics with Fathom on Fly.io
 date: 2022-11-19
 abstract: Fathom Analytics is an alternative to Google Analytics. They provide a lite version to deploy on your own server. Mine lives on Fly.io, which is incredibly nice to use.
 ---
-
-import { Image } from "astro:assets";
-import success from "./_media/success.jpeg";
-import loginScreen from "./_media/login-screen.png";
-import prepared from "./_media/prepared.gif";
 
 As I'm interested in the number of visitors my own websites are seeing, I need some basic analytics tooling. By setting up my own instance of [Fathom Lite](https://github.com/usefathom/fathom), the open-source version of [Fathom Analytics](https://usefathom.com/), I think I can do this in a fairly privacy-preserving way.
 
@@ -40,25 +34,25 @@ They had me at transmogrify. But what I actually like the most about it: Deployi
       kill_timeout = 5
       processes = []
 
-      [build]
-        image = "usefathom/fathom"
+    [build]
+    image = "usefathom/fathom"
 
-      [env]
+    [env]
 
-      [experimental]
-        allowed_public_ports = []
-        auto_rollback = true
+    [experimental]
+    allowed_public_ports = []
+    auto_rollback = true
 
-      [[services]]
-        http_checks = []
-        internal_port = 8080
-        processes = ["app"]
-        protocol = "tcp"
-        script_checks = []
-        [services.concurrency]
-          hard_limit = 25
-          soft_limit = 20
-          type = "connections"
+    [[services]]
+    http_checks = []
+    internal_port = 8080
+    processes = ["app"]
+    protocol = "tcp"
+    script_checks = []
+    [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
 
           [[services.ports]]
             force_https = true
@@ -75,6 +69,7 @@ They had me at transmogrify. But what I actually like the most about it: Deployi
             restart_limit = 0
             timeout = "2s"
         ```
+
       </details>
 
 2.  Deploy the application:
@@ -93,12 +88,7 @@ They had me at transmogrify. But what I actually like the most about it: Deployi
 
 4.  Time to bring out the champagne: Our Docker image is deployed to our custom domain.
 
-<Image
-  src={success}
-  alt="Frank raising a glass in the 'Always Sunny' episode of 'It's Always Sunny in Philadelphia'"
-  width={700}
-  format="webp"
-/>
+![Frank raising a glass in the 'Always Sunny' episode of 'It's Always Sunny in Philadelphia'](media/success.jpeg)
 
 ### Configuration
 
@@ -112,12 +102,7 @@ flyctl ssh console
 
 Now we will be greeted with a login when accessing Fathom:
 
-<Image
-  src={loginScreen}
-  alt="Screenshot of Fathom Lite showing a login prompt"
-  width={700}
-  format="webp"
-/>
+![Screenshot of Fathom Lite showing a login prompt](media/login-screen.png)
 
 ### Data persistence
 
@@ -189,12 +174,7 @@ To back up something from our volume, we use `scp` or a GUI like [Transmit](http
 
 Now we are prepared for the [occasional data loss](https://community.fly.io/t/cant-load-site-anymore/8639).
 
-<Image
-  src={prepared}
-  alt="Charlie dressed with what he imagines would be survival gear in episode of 'It's Always Sunny in Philadelphia'"
-  width={700}
-  format="gif"
-/>
+![Charlie dressed with what he imagines would be survival gear in episode of 'It's Always Sunny in Philadelphia'](media/prepared.gif)
 
 ### Pricing
 
@@ -213,4 +193,5 @@ Fly.io's [free plan](https://fly.io/docs/about/pricing/#free-allowances) has got
 </small>
 
 [^1]: See details and alternatives to CNAME in the [documentation](https://fly.io/docs/app-guides/custom-domains-with-fly/).
+
 [^2]: In case you forgot: Use `flyctl status` or the Fly.io admin UI to find the region your app is currently deployed in.

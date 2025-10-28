@@ -9,8 +9,9 @@ COPY . .
 RUN npm run build
 
 # Runtime
-FROM httpd:2.4 AS runtime
+FROM nginx:trixie AS runtime
 
-COPY --from=build /app/dist /usr/local/apache2/htdocs/
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80

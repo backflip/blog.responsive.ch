@@ -1,12 +1,8 @@
 ---
-layout: ../../layouts/Layout.astro
 title: Moving to Astro
 date: 2022-11-18
 abstract: This blog has been migrated from a previously fancy framework to a currently fancy framework.
 ---
-
-import { Image } from "astro:assets";
-import prompt from "./_media/prompt.png";
 
 Blogs are great. They are my main source of (tech) information and I very much enjoy following people like [Jim Nielsen](https://blog.jim-nielsen.com), [Dave Rupert](https://daverupert.com) or [Simon Willison](https://simonwillison.net). Their feeds have a cozy home in my [RSS reader](https://reederapp.com).
 
@@ -29,14 +25,8 @@ Now you might think this is irrelevant for a blog with zero client-side JavaScri
 ### My Astro Takeaways
 
 1. It's fun! Even the installation process, thanks to [Nate Moore](https://twitter.com/n_moore/status/1567164215307149312)'s great work. [^1]
-   <Image
-     src={prompt}
-     alt="create-astro saying hi to me"
-     format="webp"
-     className="screenshot"
-   />
+   ![create-astro saying hi to me](media/prompt.png?w=100).screenshot
 2. There are less dependencies:
-
    - `node_modules` before: `479.8 MB for 59'083 items`
    - `node_modules` after: `242.1 MB for 10'110 items`
 
@@ -51,4 +41,5 @@ Now you might think this is irrelevant for a blog with zero client-side JavaScri
 - Taking this further, Fernando Doglio's [article](https://blog.bitsrc.io/playing-with-astro-sharing-state-between-react-and-vue-components-2d5abc89f4b4) demonstrates a way of sharing state between island components written in different frameworks.
 
 [^1]: We were lucky enough to have Nate speak at this year's [Front Conference](https://frontconference.com/speakers/nate-moore) in Zürich. Turns out he knows more about the city's fountains than every living resident.
+
 [^2]: Ben came up with a _really_ fun way to present tech topics on a whiteboard, check out [#WhiteboardtheWeb videos](https://wtw.dev/)!
