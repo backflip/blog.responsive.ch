@@ -193,4 +193,5 @@ Fly.io's [free plan](https://fly.io/docs/about/pricing/#free-allowances) has got
 </small>
 
 [^1]: See details and alternatives to CNAME in the [documentation](https://fly.io/docs/app-guides/custom-domains-with-fly/).
+
 [^2]: In case you forgot: Use `flyctl status` or the Fly.io admin UI to find the region your app is currently deployed in.

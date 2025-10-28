@@ -238,4 +238,5 @@ I tend not to block ads on pages where I regularly consume free content. I would
 As long as they don't trigger reflows while I'm reading, I can live with ads. This can usually be enfored with `aspect-ratio: ...` and `overflow: hidden`. Otherwise I enable every ad blocker I can find, of course. There are limits.
 
 [^1]: See [GitHub issue](https://github.com/quoid/userscripts/issues/215) on the differences between what Userscripts supports and what alternative tools like Stylus do.
+
 [^2]: Recently, this synchronization has proven to be somewhat unreliable. From time to time, I have to open the [Files](https://support.apple.com/en-us/HT206481) app and make sure all the user styles are downloaded to my device. But this is probably due to my phone being low on storage rather than a general issue.

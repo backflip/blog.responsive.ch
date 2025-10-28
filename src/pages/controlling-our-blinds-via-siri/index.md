@@ -25,7 +25,7 @@ For the radio setup, I decided on the [Z-Wave](https://en.wikipedia.org/wiki/Z-W
 
 | [Aeotec Nano Shutter](https://aeotec.com/z-wave-motor-shutter-curtain-control/) | [Fibaro Roller Shutter 3](https://www.fibaro.com/en/products/smart-roller-shutter/) | [Qubino Flush Shutter](https://qubino.com/products/flush-shutter/) |
 | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| ![Aeotec Nano Shutter](media/aeotec.jpeg?w=420)                               | ![Fibaro Roller Shutter 3](media/fibaro.jpeg?w=420)                               | ![Qubino Flush Shutter](media/qubino.jpeg?w=420)                 |
+| ![Aeotec Nano Shutter](media/aeotec.jpeg?w=420)                                 | ![Fibaro Roller Shutter 3](media/fibaro.jpeg?w=420)                                 | ![Qubino Flush Shutter](media/qubino.jpeg?w=420)                   |
 
 </div>
 

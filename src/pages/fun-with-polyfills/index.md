@@ -202,12 +202,12 @@ links.forEach((link) => {
 Additionally adding `web.dom-collections.for-each` to the `exclude` option will finally give us the following output:
 
 ```js
-window.NodeList &&
+(window.NodeList &&
   !NodeList.prototype.forEach &&
   (NodeList.prototype.forEach = Array.prototype.forEach),
   document.querySelectorAll("a").forEach(function (o) {
     console.log(o.href);
-  });
+  }));
 ```
 
 ![Glenn Howerton, Rob McElhenney and Charlie Day giving the thumbs up](media/success.png)
