@@ -16,10 +16,7 @@ export default ({ title, description, content, root }) =>
         href="/rss.xml"
         title="RSS Feed"
       />
-      <link
-        rel="stylesheet"
-        href="https://www.responsive.ch/assets/index.css"
-      />
+      <link rel="stylesheet" href="https://www.responsive.ch/styles/main.css" />
       <link rel="stylesheet" href="/styles/main.css" />
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

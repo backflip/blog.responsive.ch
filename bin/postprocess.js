@@ -33,7 +33,7 @@ async function transformStyles() {
   await writeFile(stylesPath, code);
 
   console.log(
-    `${styleText("green", "[transformStyles]")} Transformed ${stylesPath}`,
+    `${styleText("green", "[transformStyles]")} Transformed ${stylesPath}`
   );
 }
 
@@ -104,7 +104,7 @@ async function processImages() {
         height ? 2 * height : undefined,
         {
           withoutEnlargement: true,
-        },
+        }
       );
 
       if (widthParam) {
@@ -120,7 +120,7 @@ async function processImages() {
       console.log(
         `${styleText("green", "[processImages]")} Created ${distPath} (${
           width || ""
-        }x${height || ""})`,
+        }x${height || ""})`
       );
     }
 

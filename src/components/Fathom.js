@@ -3,7 +3,8 @@ import { html } from "../utils/html.js";
 /**
  * @param {{ siteId: string }} props
  * @returns {string}
- */ export default ({ siteId }) =>
+ */
+export default ({ siteId }) =>
   html`<script>
     (function (f, a, t, h, o, m) {
       a[h] =

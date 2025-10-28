@@ -43,7 +43,7 @@ marked.use(
         theme: "github-dark-dimmed",
       });
     },
-  }),
+  })
 );
 
 /**
@@ -124,7 +124,7 @@ async function buildPages({ pages }) {
     const pageDistDir = pageDir.replace(pagesDir, distDir);
     const pageDistPath = resolve(
       pageDistDir,
-      `${basename(srcPath, ".md")}.html`,
+      `${basename(srcPath, ".md")}.html`
     );
 
     await mkdir(pageDistDir, { recursive: true });
@@ -142,8 +142,8 @@ async function buildPages({ pages }) {
     console.log(
       `${styleText(
         "green",
-        "[buildPosts]",
-      )} Built ${pageDistPath} and copied its media assets`,
+        "[buildPosts]"
+      )} Built ${pageDistPath} and copied its media assets`
     );
   }
 }
@@ -202,7 +202,7 @@ async function buildFeed({ posts }) {
 
   await writeFile(
     distPath,
-    html`<?xml version="1.0" encoding="utf-8"?>${feed}`,
+    html`<?xml version="1.0" encoding="utf-8"?>${feed}`
   );
 
   console.log(`${styleText("green", "[buildFeed]")} Built RSS feed`);
@@ -217,7 +217,7 @@ async function copyPublic() {
   await cp(srcDir, distDir, { recursive: true });
 
   console.log(
-    `${styleText("green", "[copyPublic]")} Copied \`public/\` to ${distDir}`,
+    `${styleText("green", "[copyPublic]")} Copied \`public/\` to ${distDir}`
   );
 }
 
