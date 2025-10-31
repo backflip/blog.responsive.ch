@@ -8,6 +8,7 @@ import { marked } from "marked";
 import markedShiki from "marked-shiki";
 import { createHighlighter } from "shiki";
 import xml from "xml";
+import * as esbuild from "esbuild";
 import Layout from "../src/components/Layout.js";
 import Listing from "../src/components/Listing.js";
 import { html } from "../src/utils/html.js";
@@ -222,6 +223,23 @@ async function copyPublic() {
 }
 
 /**
+ * Bundle JavaScript with ESBuild
+ */
+async function buildScripts() {
+  const srcPath = resolve(import.meta.dirname, "../src/scripts/index.js");
+  const distPath = resolve(distDir, "scripts/index.js");
+
+  await esbuild.build({
+    entryPoints: [srcPath],
+    bundle: true,
+    minify: true,
+    outfile: distPath,
+  });
+
+  console.log(`${styleText("green", "[bundleScripts]")} Bundled ${distPath}`);
+}
+
+/**
  * Put everything together
  */
 async function build() {
@@ -237,6 +255,7 @@ async function build() {
     buildOverview({ posts }),
     buildFeed({ posts }),
     copyPublic(),
+    buildScripts(),
   ]);
 }
 
