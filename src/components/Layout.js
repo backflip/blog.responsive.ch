@@ -36,10 +36,11 @@ export default ({ title, description, content, root }) =>
         <main>${title ? html`<h1>${title}</h1>` : ""} ${content}</main>
         <footer>
           <img
-            src="https://www.responsive.ch/media/portrait-224.webp"
+            src="https://www.responsive.ch/media/portrait-200.webp"
             alt="Thomas Jaggi"
             width="90"
             height="90"
+            loading="lazy"
           />
           <p>
             A blog about web technology and remotely related thingies.<br />

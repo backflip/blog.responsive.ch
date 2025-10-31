@@ -14,7 +14,7 @@ import { parseHTML } from "linkedom";
 
 const distDir = resolve(import.meta.dirname, "../dist");
 
-const IMAGE_MAX_WIDTH = 800;
+const IMAGE_WIDTHS = [400, 800, 1600];
 const IMAGE_FORMATS_TO_CONVERT = ["jpg", "jpeg", "png"];
 
 /**
@@ -38,10 +38,30 @@ async function transformStyles() {
 }
 
 /**
+ * Get resize targets
+ * @param {number} originalWidth
+ * @returns {number[]}
+ */
+function getImageWidths(originalWidth) {
+  const maxWidth = /** @type {number} */ (
+    IMAGE_WIDTHS.find((width) => width >= originalWidth) ||
+      IMAGE_WIDTHS[IMAGE_WIDTHS.length - 1]
+  );
+
+  let widths = IMAGE_WIDTHS.filter((width) => width <= maxWidth);
+
+  if (widths.length === 1) {
+    widths.unshift(maxWidth / 2);
+  }
+
+  return widths;
+}
+
+/**
  * Process images
  * - Extract image URLs from built HTML using LinkeDOM
- * - Optimize size (resize to IMAGE_MAX_WIDTH or specific dimensions if `w` and/or `h` query parameters are present) with Sharp
  * - Convert to WebP with Sharp
+ * - Create multiple sizes with Sharp, create corresponding responsive image markup
  */
 async function processImages() {
   const pages = await glob(`${distDir}/**/*.html`);
@@ -73,55 +93,58 @@ async function processImages() {
       const filePath = new URL(resolvedSrc, "file://").pathname;
       const content = await readFile(filePath);
       const format = extname(filePath).replace(".", "").toLowerCase();
-
-      let distPath = filePath;
-
-      const url = new URL(image.src, "http://localhost");
       const transformed = await sharp(content);
+      const { width: originalWidth, height: originalHeight } =
+        await transformed.metadata();
 
       // Transform to webp
       if (IMAGE_FORMATS_TO_CONVERT.includes(format)) {
         await transformed.webp({ quality: 75 });
-
-        distPath = distPath.replace(`.${format}`, ".webp");
-
-        image.src = url.pathname
-          .replace(new RegExp(`.${format}$`), ".webp")
-          .replace(/^\//, "");
       }
+
+      // Create resize configs
+      const widths = getImageWidths(originalWidth);
+      const images = widths.map((width) => {
+        // Add width suffix to filename
+        let src = image.src.replace(
+          extname(image.src),
+          `-${width}${extname(image.src)}`
+        );
+
+        // Update format
+        if (IMAGE_FORMATS_TO_CONVERT.includes(format)) {
+          src = src.replace(new RegExp(`.${format}$`), ".webp");
+        }
+
+        return { width, src };
+      });
 
       // Resize
-      // Check for width (`w`) and height (`h`) query parameters, fall back to max-width of 800px
-      // Duplicate by 2x for high-res displays
-      const widthParam = url.searchParams.get("w");
-      const heightParam = url.searchParams.get("h");
-
-      const width = widthParam ? parseInt(widthParam, 10) : IMAGE_MAX_WIDTH;
-      const height = heightParam ? parseInt(heightParam, 10) : undefined;
-
-      await transformed.resize(
-        width ? 2 * width : undefined,
-        height ? 2 * height : undefined,
-        {
+      for (const { width, src } of images) {
+        const resized = await transformed.clone().resize(width, undefined, {
           withoutEnlargement: true,
-        }
-      );
+        });
 
-      if (widthParam) {
-        image.setAttribute("width", String(width));
+        // Save
+        const distPath = resolve(dirname(page), src);
+
+        await resized.toFile(distPath);
+
+        console.log(
+          `${styleText("green", "[processImages]")} Created ${distPath}`
+        );
       }
-      if (heightParam) {
-        image.setAttribute("height", String(height));
-      }
 
-      // Save
-      await transformed.toFile(distPath);
+      // Update markup
+      const maxWidth = /** @type {number} */ (widths[widths.length - 1]);
 
-      console.log(
-        `${styleText("green", "[processImages]")} Created ${distPath} (${
-          width || ""
-        }x${height || ""})`
-      );
+      image.srcset = images
+        .map(({ src, width }) => `${src} ${width}w`)
+        .join(", ");
+      image.sizes = "auto";
+      image.setAttribute("loading", "lazy");
+      image.width = maxWidth;
+      image.height = Math.round((originalHeight / originalWidth) * maxWidth);
     }
 
     const updatedContent = document.toString();
