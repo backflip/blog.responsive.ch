@@ -3,6 +3,16 @@
   --color-code-dark: lch(from black calc(l + 20) c h);
 }
 
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 header {
   padding-top: 1em;
 }
@@ -67,6 +77,15 @@ code:not(.shiki code) {
   margin: 0;
 }
 
+.footnotes {
+  margin-top: 2em;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+}
+.footnotes ol {
+  margin-top: 2em;
+  margin-bottom: 0.;
+}
 .footnotes li p {
   margin-top: 0;
   margin-bottom: 0;

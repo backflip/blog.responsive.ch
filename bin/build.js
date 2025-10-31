@@ -5,6 +5,7 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import { styleText } from "node:util";
 import fm from "front-matter";
 import { marked } from "marked";
+import markedFootnote from "marked-footnote";
 import markedShiki from "marked-shiki";
 import { createHighlighter } from "shiki";
 import xml from "xml";
@@ -44,6 +45,13 @@ marked.use(
         theme: "github-dark-dimmed",
       });
     },
+  })
+);
+
+// Handle footnotes
+marked.use(
+  markedFootnote({
+    headingClass: "visually-hidden",
   })
 );
 
