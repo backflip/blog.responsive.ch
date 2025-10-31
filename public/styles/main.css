@@ -85,5 +85,6 @@ footer {
 
 footer img {
   width: 5.625rem;
+  height: auto;
   border-radius: 100%;
 }
