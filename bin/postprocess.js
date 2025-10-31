@@ -113,7 +113,7 @@ async function processImages() {
 
         // Update format
         if (IMAGE_FORMATS_TO_CONVERT.includes(format)) {
-          src = src.replace(new RegExp(`.${format}$`), ".webp");
+          src = src.replace(new RegExp(`.${format}(\\?|$)`), ".webp");
         }
 
         return { width, src };
