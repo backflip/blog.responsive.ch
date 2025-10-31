@@ -25,7 +25,7 @@ Now you might think this is irrelevant for a blog with zero client-side JavaScri
 ### My Astro Takeaways
 
 1. It's fun! Even the installation process, thanks to [Nate Moore](https://twitter.com/n_moore/status/1567164215307149312)'s great work. [^1]
-   ![create-astro saying hi to me](media/prompt.png).screenshot
+   ![create-astro saying hi to me](media/prompt.png)
 2. There are less dependencies:
    - `node_modules` before: `479.8 MB for 59'083 items`
    - `node_modules` after: `242.1 MB for 10'110 items`

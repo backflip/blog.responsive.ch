@@ -47,8 +47,7 @@ main img {
   margin: 0 auto 2em;
 }
 
-main figure img,
-main img.screenshot {
+main figure img {
   margin-bottom: 0;
 }
 
