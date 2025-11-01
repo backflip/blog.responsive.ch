@@ -4,9 +4,10 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "build": "./bin/build.js",
-    "dev": "python3 -m http.server -d dist",
-    "postbuild": "./bin/postprocess.js",
+    "build": "node ./bin/build.js",
+    "dev": "node --watch-path=./src ./bin/build.js",
+    "serve": "python3 -m http.server -d dist",
+    "postbuild": "node ./bin/postprocess.js",
     "typecheck": "tsc -p jsconfig.json",
     "format": "prettier --write ."
   },
