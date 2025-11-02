@@ -2,7 +2,8 @@
 import { readFile, writeFile, glob } from "node:fs/promises";
 import { basename, dirname, extname, resolve } from "node:path";
 import { styleText } from "node:util";
-import { transform } from "lightningcss";
+import browserslist from "browserslist";
+import { transform, browserslistToTargets } from "lightningcss";
 import sharp from "sharp";
 import { parseHTML } from "linkedom";
 
@@ -24,10 +25,13 @@ async function transformStyles() {
   const stylesPath = resolve(distDir, "styles/main.css");
   const styles = await readFile(stylesPath);
 
+  const targets = browserslistToTargets(browserslist());
+
   const { code } = transform({
     filename: basename(stylesPath),
     code: styles,
     minify: true,
+    targets,
   });
 
   await writeFile(stylesPath, code);
