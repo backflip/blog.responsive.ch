@@ -33,7 +33,7 @@ const SITE_DESCRIPTION =
 
 // Setup syntax highlighter
 const highlighter = await createHighlighter({
-  langs: ["html", "bash", "json", "toml"],
+  langs: ["html", "bash", "json", "toml", "md"],
   themes: ["github-dark-dimmed"],
 });
 
