@@ -10,6 +10,7 @@ import markedShiki from "marked-shiki";
 import { createHighlighter } from "shiki";
 import xml from "xml";
 import * as esbuild from "esbuild";
+import browserslistToEsbuild from "browserslist-to-esbuild";
 import Layout from "../src/components/Layout.js";
 import Listing from "../src/components/Listing.js";
 import { html } from "../src/utils/html.js";
@@ -237,11 +238,14 @@ async function buildScripts() {
   const srcPath = resolve(import.meta.dirname, "../src/scripts/index.js");
   const distPath = resolve(distDir, "scripts/index.js");
 
+  const target = browserslistToEsbuild();
+
   await esbuild.build({
     entryPoints: [srcPath],
     bundle: true,
     minify: true,
     outfile: distPath,
+    target,
   });
 
   console.log(`${styleText("green", "[bundleScripts]")} Bundled ${distPath}`);
