@@ -120,5 +120,6 @@ footer {
     width: 5.625rem;
     height: auto;
     border-radius: 100%;
+    margin: 0;
   }
 }
