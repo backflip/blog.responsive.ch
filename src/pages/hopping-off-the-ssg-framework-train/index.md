@@ -104,6 +104,8 @@ Okay, for one, there is no real development server. Instead, I serve the `dist/`
 
 Second: Test coverage. Works on my machine.
 
+Third: I don't yet understand the [ETag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/ETag) caching behavior used by nginx (specifically, when my browser should decide to fetch updated styles or client-side scripts).
+
 ## Summary
 
 - Tired of regularly upgrading your SSG framework? There are two options:
