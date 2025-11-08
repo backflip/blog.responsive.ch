@@ -84,6 +84,12 @@ The [layout component](https://github.com/backflip/blog.responsive.ch/blob/346d3
 
 It is created from a [single entrypoint](https://github.com/backflip/blog.responsive.ch/blob/346d3efbddbfe5decaeb22613f9c70898c75b45c/src/scripts/index.js) using [esbuild](https://esbuild.github.io/). There are some hoops to jump through in order to map the Browserslist config to esbuild's [target option](https://www.npmjs.com/package/browserslist-to-esbuild), but nothing too fancy.
 
+## Deployment
+
+A two-stage [Docker build](https://github.com/backflip/blog.responsive.ch/blob/346d3efbddbfe5decaeb22613f9c70898c75b45c/Dockerfile) first runs the build and postprocess scripts and serves the result with `nginx`. A custom [config file](https://github.com/backflip/blog.responsive.ch/blob/346d3efbddbfe5decaeb22613f9c70898c75b45c/nginx.default.conf) makes sure that we have a nice [404 page](https://github.com/backflip/blog.responsive.ch/blob/346d3efbddbfe5decaeb22613f9c70898c75b45c/src/pages/404/index.md).
+
+This should work everywhere we can run a docker container. As a fan of [fly.io](https://fly.io), I have chosen their platform and deploy via their default [GitHub action](https://github.com/backflip/blog.responsive.ch/blob/346d3efbddbfe5decaeb22613f9c70898c75b45c/.github/workflows/fly-deploy.yml).
+
 ## Limitations
 
 Limitations?
