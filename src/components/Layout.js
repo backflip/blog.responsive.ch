@@ -30,11 +30,12 @@ export default ({ title, description, content, root }) =>
     <body>
       <div class="wrapper">
         <header>
-          <a ${root ? `aria-current="page"` : ""} href="/"
-            >${root ? "" : `← `}blog.responsive.ch</a
-          >
+          ${root ? "" : html`<a href="/">← blog.responsive.ch</a>`}
         </header>
-        <main>${title ? html`<h1>${title}</h1>` : ""} ${content}</main>
+        <main>
+          ${title ? html`<h1 class="${root ? "root" : ""}">${title}</h1>` : ""}
+          ${content}
+        </main>
         <footer>
           <img
             src="https://www.responsive.ch/media/portrait-200.webp"

@@ -179,7 +179,12 @@ async function buildPages({ pages }) {
  */
 async function buildOverview({ posts }) {
   const listing = Listing({ posts });
-  const page = Layout({ content: listing, description: SITE_DESCRIPTION });
+  const page = Layout({
+    title: SITE_TITLE,
+    content: listing,
+    description: SITE_DESCRIPTION,
+    root: true,
+  });
 
   const distPath = join(distDir, "index.html");
 

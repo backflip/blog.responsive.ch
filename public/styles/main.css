@@ -121,6 +121,14 @@ header {
   padding-block-start: 1em;
 }
 
+main {
+  h1.root {
+    all: initial;
+    font: inherit;
+    color: inherit;
+  }
+}
+
 article {
   margin-block-start: 4em;
 
