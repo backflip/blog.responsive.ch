@@ -1,4 +1,4 @@
-import { html } from "../utils/html.js";
+import { escapeHTML, html } from "../utils/html.js";
 import Fathom from "./Fathom.js";
 
 /**
@@ -24,7 +24,7 @@ export default ({ title, description, content, root }) =>
       <script src="/scripts/index.js" type="module"></script>
       <title>${title ? `${title} – ` : ""}blog.responsive.ch</title>
       ${description
-        ? html`<meta name="description" content="${description}" />`
+        ? html`<meta name="description" content="${escapeHTML(description)}" />`
         : ""}
     </head>
     <body>
