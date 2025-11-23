@@ -14,6 +14,7 @@ import browserslistToEsbuild from "browserslist-to-esbuild";
 import Layout from "../src/components/Layout.js";
 import Listing from "../src/components/Listing.js";
 import { html } from "../src/utils/html.js";
+import { DOMParser } from "linkedom";
 
 /**
  * Static site builder
@@ -55,6 +56,20 @@ marked.use(
     headingClass: "visually-hidden",
   })
 );
+
+/**
+ * Remove HTML tags from string (linkedom's DOMParser requires some wrapping)
+ * @param {string} html
+ * @returns {string}
+ */
+function strip(html) {
+  const document = new DOMParser().parseFromString(
+    `<html><body>${html}</body></html>`,
+    "text/html"
+  );
+
+  return document.body.textContent;
+}
 
 /**
  * Empty `dist` directory
@@ -127,7 +142,7 @@ async function buildPages({ pages }) {
     const html = Layout({
       title,
       content,
-      description: "abstract" in page ? page.abstract : undefined,
+      description: "abstract" in page ? strip(page.abstract) : undefined,
     });
 
     const pageDir = dirname(srcPath);
