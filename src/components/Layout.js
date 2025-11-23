@@ -21,6 +21,7 @@ export default ({ title, description, content, root }) =>
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      <link rel="expect" href="#heading" blocking="render" />
       <script src="/scripts/index.js" type="module"></script>
       <title>${title ? `${title} – ` : ""}blog.responsive.ch</title>
       ${description
@@ -33,7 +34,9 @@ export default ({ title, description, content, root }) =>
           ${root ? "" : html`<a href="/">← blog.responsive.ch</a>`}
         </header>
         <main>
-          ${title ? html`<h1 class="${root ? "root" : ""}">${title}</h1>` : ""}
+          ${title
+            ? html`<h1 ${root ? `class="root"` : ` id="heading"`}>${title}</h1>`
+            : ""}
           ${content}
         </main>
         <footer>
